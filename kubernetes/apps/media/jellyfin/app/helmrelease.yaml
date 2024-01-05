@@ -28,6 +28,7 @@ spec:
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
       securityContext:
+        privileged: true
         runAsUser: 568
         runAsGroup: 568
         fsGroup: 568
