@@ -34,7 +34,7 @@ spec:
               repository: linuxserver/jellyfin
               tag: 10.8.13
               env:
-              JELLYFIN_PublishedServerUrl: &loadBalancerIP ${CLUSTER_LB_JELLYFIN}
+              JELLYFIN_PublishedServerUrl: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
               TZ: ${TIMEZONE}
             probes:
               liveness: &probes
@@ -66,11 +66,12 @@ spec:
         runAsUser: 568
         runAsGroup: 568
         fsGroup: 568
+        supplementalGroups: [44, 105, 10000]
     service:
       main:
         type: LoadBalancer
-        loadBalancerIP: *loadBalancerIP
-        externalTrafficPolicy: Local
+        # loadBalancerIP: *loadBalancerIP
+        externalTrafficPolicy: Cluster
         ports:
           http:
             port: *port
@@ -82,7 +83,7 @@ spec:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           hajimari.io/icon: simple-icons:jellyfin
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: *host
             paths:
               - path: /
                 service:
