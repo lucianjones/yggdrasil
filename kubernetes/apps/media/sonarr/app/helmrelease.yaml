@@ -38,7 +38,7 @@ spec:
               COMPlus_EnableDiagnostics: "0"
               SONARR__INSTANCE_NAME: Sonarr
               SONARR__PORT: &port 8989
-              SONARR__APPLICATION_URL: "https://sonarr.lucianjones.io"
+              SONARR__APPLICATION_URL: "https://sonarr.${SECRET_DOMAIN}"
               SONARR__LOG_LEVEL: info
             probes:
               liveness: &probes
@@ -68,7 +68,6 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: "OnRootMismatch"
-
     service:
       main:
         ports:
@@ -90,7 +89,6 @@ spec:
         tls:
           - hosts:
               - *host
-
     persistence:
       config:
         enabled: true
