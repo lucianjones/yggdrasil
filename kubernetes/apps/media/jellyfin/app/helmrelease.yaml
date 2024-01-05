@@ -26,12 +26,12 @@ spec:
     defaultPodOptions:
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
-      # securityContext:
-      #   privileged: true
-      #   runAsUser: 568
-      #   runAsGroup: 568
-      #   fsGroup: 568
-      #   fsGroupChangePolicy: OnRootMismatch
+      securityContext:
+        privileged: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       main:
         type: statefulset
@@ -102,18 +102,18 @@ spec:
     persistence:
       tv:
         enabled: true
-        type: hostPath
-        hostPath: /mnt/data/media/tv
+        type: nfs
+        server: 10.10.10.10
+        path: /mnt/data/media/tv
         globalMounts:
           - path: /data/tvshows
-            readOnly: false
       movies:
         enabled: true
-        type: hostPath
-        hostPath: /mnt/data/media/movies
+        type: nfs
+        server: 10.10.10.10
+        path: /mnt/data/media/movies
         globalMounts:
           - path: /data/movies
-            readOnly: false
       transcode:
         enabled: true
         type: emptyDir
@@ -124,3 +124,18 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /cache
+
+      # tv:
+      #   enabled: true
+      #   type: hostPath
+      #   hostPath: /mnt/data/media/tv
+      #   globalMounts:
+      #     - path: /data/tvshows
+      #       readOnly: false
+      # movies:
+      #   enabled: true
+      #   type: hostPath
+      #   hostPath: /mnt/data/media/movies
+      #   globalMounts:
+      #     - path: /data/movies
+      #       readOnly: false
