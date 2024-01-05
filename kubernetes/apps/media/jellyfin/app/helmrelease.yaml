@@ -66,14 +66,14 @@ spec:
               limits:
                 gpu.intel.com/i915: 1
                 memory: 8Gi
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 10Gi
-              storageClass: local-hostpath
-              globalMounts:
-                - path: /config
+        # statefulset:
+        #   volumeClaimTemplates:
+        #     - name: config
+        #       accessMode: ReadWriteOnce
+        #       size: 10Gi
+        #       storageClass: local-hostpath
+        #       globalMounts:
+        #         - path: /config
     service:
       main:
         type: LoadBalancer
@@ -124,6 +124,13 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /cache
+      config:
+        enabled: true
+        type: hostPath
+        hostPath: /srv/jellyfin
+        globalMounts:
+          - path: /config
+            readOnly: false
 
       # tv:
       #   enabled: true
