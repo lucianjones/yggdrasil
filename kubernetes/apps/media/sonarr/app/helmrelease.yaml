@@ -102,8 +102,16 @@ spec:
 
       media:
         enabled: true
-        type: hostPath
-        hostPath: /mnt/data
+        type: nfs
+        server: 10.10.10.10
+        path: /mnt/data
         globalMounts:
           - path: /mnt/data
-            readOnly: false
+
+      # media:
+      #   enabled: true
+      #   type: hostPath
+      #   hostPath: /mnt/data
+      #   globalMounts:
+      #     - path: /mnt/data
+      #       readOnly: false
