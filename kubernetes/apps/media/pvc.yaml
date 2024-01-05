@@ -13,3 +13,17 @@ spec:
     - ReadWriteMany
   hostPath:
     path: "/mnt/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: "media"
+  name: "data"
+spec:
+  storageClassName: "manual"
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: "3000Gi"
+---
