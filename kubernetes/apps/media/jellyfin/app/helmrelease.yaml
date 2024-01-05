@@ -38,12 +38,9 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/jellyfin
-              tag: 10.8.11@sha256:926e2a9f6677a0c7b12feba29f36c954154869318d6a52df72f72ff9c74cf494
-            env:
-              DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
-              JELLYFIN_FFmpeg__probesize: 50000000
-              JELLYFIN_FFmpeg__analyzeduration: 50000000
+              repository: linuxserver/jellyfin
+              tag: 10.8.13
+              env:
               JELLYFIN_PublishedServerUrl: &loadBalancerIP ${CLUSTER_LB_JELLYFIN}
               TZ: ${TIMEZONE}
             probes:
@@ -84,7 +81,7 @@ spec:
         externalTrafficPolicy: Local
         ports:
           http:
-            port: 8096
+            port: *port
     ingress:
       main:
         enabled: true
