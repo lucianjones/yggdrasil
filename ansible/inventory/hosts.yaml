@@ -1,0 +1,8 @@
+---
+kubernetes:
+  children:
+    master:
+      hosts:
+        yggdrasil:
+          ansible_user: lucian
+          ansible_host: 10.10.10.10
