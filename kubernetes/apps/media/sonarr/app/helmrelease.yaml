@@ -31,8 +31,8 @@ spec:
           main:
             strategy: RollingUpdate
             image:
-              repository: ghcr.io/onedr0p/sonarr-develop
-              tag: 4.0.0.751@sha256:405053032fd6b4f7537c1b7fc8b8bde69dceba24546c68ed22f9bd63d9168f76
+              repository: linuxserver/sonarr
+              tag: 4.0.0-develop
             env:
               TZ: ${TIMEZONE}
               PUSHOVER_DEBUG: "false"
