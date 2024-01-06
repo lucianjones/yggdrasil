@@ -90,5 +90,5 @@ spec:
         type: hostPath
         hostPath: /srv/jellyseerr
         globalMounts:
-          - path: /config
+          - path: /app/config
             readOnly: false
