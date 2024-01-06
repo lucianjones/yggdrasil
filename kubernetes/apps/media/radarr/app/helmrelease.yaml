@@ -32,7 +32,7 @@ spec:
             strategy: RollingUpdate
             image:
               repository: linuxserver/radarr
-              tag: 4.0.0-develop
+              tag: 5.26
             env:
               TZ: ${TIMEZONE}
               COMPlus_EnableDiagnostics: "0"
