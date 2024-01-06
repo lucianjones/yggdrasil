@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./jellyfin/ks.yaml
+  - ./jellyseerr/ks.yaml
   - ./sonarr/ks.yaml
   - ./radarr/ks.yaml
   - ./rdt-client/ks.yaml
