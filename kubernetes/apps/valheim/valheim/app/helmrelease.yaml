@@ -8,10 +8,10 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: valheim-k8s
+      chart: ./charts/valheim
       version: 1.2.0
       sourceRef:
-        kind: HelmRepository
+        kind: GitRepository
         name: valheim-k8s
         namespace: flux-system
   maxHistory: 2
@@ -36,3 +36,8 @@ spec:
       kind: hostvol
       hostvol:
         path: /srv/valheim/data
+    networking:
+      annotations:
+        external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+      status:
+        enabled: true

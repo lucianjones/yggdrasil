@@ -24,5 +24,4 @@ resources:
   - ./prometheus-community.yaml
   - ./sealed-secrets.yaml
   - ./stakater.yaml
-  - ./valheim-k8s.yaml
   - ./weave-gitops.yaml

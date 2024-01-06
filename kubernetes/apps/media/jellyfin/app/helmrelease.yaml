@@ -119,18 +119,3 @@ spec:
         globalMounts:
           - path: /config
             readOnly: false
-
-      # tv:
-      #   enabled: true
-      #   type: hostPath
-      #   hostPath: /mnt/data/media/tv
-      #   globalMounts:
-      #     - path: /data/tvshows
-      #       readOnly: false
-      # movies:
-      #   enabled: true
-      #   type: hostPath
-      #   hostPath: /mnt/data/media/movies
-      #   globalMounts:
-      #     - path: /data/movies
-      #       readOnly: false
