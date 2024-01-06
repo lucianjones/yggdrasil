@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: rdt-client
+  name: prowlarr
   namespace: media
 spec:
   interval: 15m
@@ -31,10 +31,15 @@ spec:
           main:
             strategy: RollingUpdate
             image:
-              repository: rogerfar/rdtclient
-              tag: 2.0.53
+              repository: linuxserver/prowlarr
+              tag: 1.11.4
             env:
               TZ: ${TIMEZONE}
+              COMPlus_EnableDiagnostics: "0"
+              PROWLARR__INSTANCE_NAME: Prowlarr
+              PROWLARR__PORT: &port 9696
+              PROWLARR__APPLICATION_URL: "https://prowlarr.${SECRET_DOMAIN}"
+              PROWLARR__LOG_LEVEL: info
             probes:
               liveness: &probes
                 enabled: true
@@ -42,7 +47,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ping
-                    port: &port 6500
+                    port: *port
                   initialDelaySeconds: 10
                   periodSeconds: 10
                   timeoutSeconds: 3
@@ -73,7 +78,7 @@ spec:
         enabled: true
         className: "internal"
         annotations:
-          hajimari.io/icon: mdi:download-box
+          hajimari.io/icon: mdi:transfer-down
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -88,15 +93,7 @@ spec:
       config:
         enabled: true
         type: hostPath
-        hostPath: /srv/rdt-client
+        hostPath: /srv/prowlarr
         globalMounts:
-          - path: /data/db
+          - path: /config
             readOnly: false
-
-      media:
-        enabled: true
-        type: nfs
-        server: 10.10.10.10
-        path: /mnt/data/downloads
-        globalMounts:
-          - path: /data/downloads
