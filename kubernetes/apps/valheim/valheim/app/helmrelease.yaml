@@ -35,7 +35,7 @@ spec:
               tag: latest
             env:
               SERVER_NAME: liveheim-laughheim-loveheim
-              WORLD_NAME: test
+              WORLD_NAME: muckyandco
               SERVER_PASS:
                 valueFrom:
                   secretKeyRef:
