@@ -7,6 +7,6 @@ spec:
   endpoints:
     - dnsName: valheim.lucianjones.io
       recordTTL: 180
-      recordType: A
+      recordType: CNAME
       targets:
-        - 10.10.10.105
+        - external.lucianjones.io
