@@ -5,4 +5,4 @@ namespace: valheim
 resources:
   - ./helmrelease.yaml
   - ./valheim-secret.yaml
-  - ./dnsendpoint.yaml
+  # - ./dnsendpoint.yaml
