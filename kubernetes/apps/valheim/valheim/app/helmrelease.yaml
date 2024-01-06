@@ -38,6 +38,6 @@ spec:
         path: /srv/valheim/data
     networking:
       annotations:
-        external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        external-dns.alpha.kubernetes.io/target: "valheim.${SECRET_DOMAIN}"
       status:
         enabled: true
