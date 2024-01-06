@@ -27,7 +27,7 @@ spec:
   values:
     worldName: test
     serverName: liveheim-laughheim-loveheim
-    passwordSecret: sh.helm.release.v1.valheim.v1
+    passwordSecret: valheim
     storage:
       kind: hostvol
       hostvol:
