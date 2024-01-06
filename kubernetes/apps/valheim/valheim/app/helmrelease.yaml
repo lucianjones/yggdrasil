@@ -31,8 +31,8 @@ spec:
     storage:
       kind: hostvol
       hostvol:
-        path: /svr/valheim/config
+        path: /srv/valheim/config
     serverStorage:
       kind: hostvol
       hostvol:
-        path: /svr/valheim/data
+        path: /srv/valheim/data
