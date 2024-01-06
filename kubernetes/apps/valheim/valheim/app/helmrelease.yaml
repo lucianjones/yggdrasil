@@ -8,11 +8,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: ./charts/valheim
-      version: 1.2.0
+      chart: app-template
+      version: 2.4.0
       sourceRef:
-        kind: GitRepository
-        name: valheim-k8s
+        kind: HelmRepository
+        name: bjw-s
         namespace: flux-system
   maxHistory: 2
   install:
@@ -25,20 +25,71 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    worldName: test
-    serverName: liveheim-laughheim-loveheim
-    passwordSecret: serverpassword
-    storage:
-      kind: hostvol
-      hostvol:
-        path: /srv/valheim/config
-    serverStorage:
-      kind: hostvol
-      hostvol:
-        path: /srv/valheim/data
-    networking:
-      annotations:
-        # external-dns.alpha.kubernetes.io/target: "valheim.${SECRET_DOMAIN}"
-        io.cilium/lb-ipam-ips: 10.10.10.105
-      status:
+    controllers:
+      main:
+        containers:
+          main:
+            strategy: RollingUpdate
+            image:
+              repository: lloesche/valheim-server
+              tag: latest
+            env:
+              SERVER_NAME: liveheim-laughheim-loveheim
+              WORLD_NAME: test
+              SERVER_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: serverpassword
+                    key: password
+              SERVER_PUBLIC: true
+              SERVER_ARGS:
+                - "-crossplay"
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                memory: 10Gi
+    service:
+      main:
+        annotations:
+          io.cilium/lb-ipam-ips: 10.10.10.105
+        type: LoadBalancer
+        ports:
+          gameport:
+            enabled: true
+            port: 2456
+            protocol: UDP
+          queryport:
+            enabled: true
+            port: 2457
+            protocol: UDP
+          statusport:
+            enabled: true
+            port: 8080
+            protocol: tcp
+    ingress:
+      main:
+        enabled: false
+    persistence:
+      config:
         enabled: true
+        type: hostPath
+        hostPath: /srv/valheim/config
+        globalMounts:
+          - path: /config
+            readOnly: false
+      data:
+        enabled: true
+        type: hostPath
+        hostPath: /srv/valheim/data
+        globalMounts:
+          - path: /opt/valheim
+            readOnly: false

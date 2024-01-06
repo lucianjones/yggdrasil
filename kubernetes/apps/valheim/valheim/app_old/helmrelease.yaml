@@ -1,0 +1,44 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: valheim
+  namespace: valheim
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: ./charts/valheim
+      version: 1.2.0
+      sourceRef:
+        kind: GitRepository
+        name: valheim-k8s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    worldName: test
+    serverName: liveheim-laughheim-loveheim
+    passwordSecret: serverpassword
+    storage:
+      kind: hostvol
+      hostvol:
+        path: /srv/valheim/config
+    serverStorage:
+      kind: hostvol
+      hostvol:
+        path: /srv/valheim/data
+    networking:
+      annotations:
+        # external-dns.alpha.kubernetes.io/target: "valheim.${SECRET_DOMAIN}"
+        io.cilium/lb-ipam-ips: 10.10.10.105
+      status:
+        enabled: true
