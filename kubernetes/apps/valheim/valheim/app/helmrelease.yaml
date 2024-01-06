@@ -38,6 +38,7 @@ spec:
         path: /srv/valheim/data
     networking:
       annotations:
-        external-dns.alpha.kubernetes.io/target: "valheim.${SECRET_DOMAIN}"
+        # external-dns.alpha.kubernetes.io/target: "valheim.${SECRET_DOMAIN}"
+        io.cilium/lb-ipam-ips: 10.10.10.105
       status:
         enabled: true
