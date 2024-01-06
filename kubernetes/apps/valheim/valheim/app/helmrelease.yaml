@@ -27,3 +27,12 @@ spec:
   values:
     worldName: test
     serverName: liveheim-laughheim-loveheim
+    passwordSecret: serverPassword
+    storage:
+      kind: hostvol
+      hostvol:
+        path: /svr/valheim/config
+    serverStorage:
+      kind: hostvol
+      hostvol:
+        path: /svr/valheim/data
