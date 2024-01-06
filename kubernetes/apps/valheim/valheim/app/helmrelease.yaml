@@ -42,8 +42,7 @@ spec:
                     name: serverpassword
                     key: password
               SERVER_PUBLIC: true
-              SERVER_ARGS:
-                - "-crossplay"
+              SERVER_ARGS: "-crossplay"
             probes:
               liveness:
                 enabled: false
@@ -76,7 +75,7 @@ spec:
           statusport:
             enabled: true
             port: 8080
-            protocol: tcp
+            protocol: TCP
     ingress:
       main:
         enabled: false
