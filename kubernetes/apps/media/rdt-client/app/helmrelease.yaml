@@ -74,6 +74,16 @@ spec:
         className: "internal"
         annotations:
           hajimari.io/icon: mdi:download-box
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Real Debrid Download Client
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/icon: rdt-client.png
+          gethomepage.dev/name: RDT
+          gethomepage.dev/pod-selector: ""
+          gethomepage.dev/widget.type: "qbittorrent"
+          gethomepage.dev/widget.url: "http://rdt-client.${SECRET_DOMAIN}"
+          gethomepage.dev/widget.username: ""
+          gethomepage.dev/widget.password: ""
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
