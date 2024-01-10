@@ -170,9 +170,9 @@ spec:
         gethomepage.dev/name: Grafana
         gethomepage.dev/pod-selector: ""
         gethomepage.dev/widget.type: "grafana"
-        gethomepage.dev/widget.url: "https://grafana.lucianjones.io"
-        gethomepage.dev/widget.username: ""
-        gethomepage.dev/widget.password: ""
+        gethomepage.dev/widget.url: "https://grafana.${SECRET_DOMAIN}"
+        gethomepage.dev/widget.username: "${GRAFANA_ADMIN_USER}"
+        gethomepage.dev/widget.password: "${GRAFANA_ADMIN_PASSWORD}"
       hosts:
         - &host "grafana.${SECRET_DOMAIN}"
       tls:
