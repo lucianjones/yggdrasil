@@ -37,6 +37,7 @@ spec:
               tag: 1.32.8
             env:
               TZ: ${TIMEZONE}
+              PLEX_CLAIM: claim-yU2HuexmhN2R3Uc42Wfv
             probes:
               liveness: &probes
                 enabled: true
