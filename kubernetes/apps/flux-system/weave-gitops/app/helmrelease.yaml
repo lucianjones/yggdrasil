@@ -34,7 +34,6 @@ spec:
       annotations:
         hajimari.io/icon: sawtooth-wave
         gethomepage.dev/enabled: "true"
-        gethomepage.dev/description: A FluxCD UI
         gethomepage.dev/group: Admin
         gethomepage.dev/icon: flux-cd.png
         gethomepage.dev/name: Weave Gitops
