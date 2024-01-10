@@ -13,9 +13,9 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      reconcileStrategy: Revision
 
   interval: 1m
-  reconcileStrategy: Revision
   driftDetection:
     mode: enabled
   maxHistory: 2
@@ -40,7 +40,7 @@ spec:
               tag: 1.32.8
             env:
               TZ: ${TIMEZONE}
-              PLEX_CLAIM: claim-5tzx2wRqe9LxUKU4VsEc
+              PLEX_CLAIM: claim-BTez4RNJbxxXZf3xxvdb
             probes:
               liveness: &probes
                 enabled: true
