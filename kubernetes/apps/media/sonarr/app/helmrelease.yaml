@@ -82,8 +82,8 @@ spec:
         annotations:
           hajimari.io/icon: mdi:television-classic
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: TV Media Management
-          gethomepage.dev/group: Media
+          gethomepage.dev/description: TV Manager
+          gethomepage.dev/group: Media Management
           gethomepage.dev/icon: sonarr.png
           gethomepage.dev/name: Sonarr
           gethomepage.dev/pod-selector: ""

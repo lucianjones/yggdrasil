@@ -82,8 +82,8 @@ spec:
         annotations:
           hajimari.io/icon: mdi:filmstrip
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Movie Media Management
-          gethomepage.dev/group: Media
+          gethomepage.dev/description: Movie Manager
+          gethomepage.dev/group: Media Management
           gethomepage.dev/icon: radarr.png
           gethomepage.dev/name: Radarr
           gethomepage.dev/pod-selector: ""

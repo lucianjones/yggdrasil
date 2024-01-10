@@ -82,8 +82,8 @@ spec:
         annotations:
           hajimari.io/icon: mdi:transfer-down
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Indexer Management
-          gethomepage.dev/group: Media
+          gethomepage.dev/description: Index Manager
+          gethomepage.dev/group: Media Management
           gethomepage.dev/icon: prowlarr.png
           gethomepage.dev/name: Prowlarr
           gethomepage.dev/pod-selector: ""
