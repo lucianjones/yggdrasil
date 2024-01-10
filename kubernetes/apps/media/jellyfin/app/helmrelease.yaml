@@ -34,8 +34,8 @@ spec:
               repository: linuxserver/jellyfin
               tag: 10.8.13
               env:
-              JELLYFIN_PublishedServerUrl: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-              TZ: ${TIMEZONE}
+                JELLYFIN_PublishedServerUrl: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+                TZ: ${TIMEZONE}
             probes:
               liveness: &probes
                 enabled: true
