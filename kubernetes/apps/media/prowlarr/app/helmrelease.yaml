@@ -40,6 +40,8 @@ spec:
               PROWLARR__PORT: &port 9696
               PROWLARR__APPLICATION_URL: "https://prowlarr.${SECRET_DOMAIN}"
               PROWLARR__LOG_LEVEL: info
+              DOCKER_MODS: ghcr.io/themepark-dev/theme.park:prowlarr
+              TP_THEME: overseerr
             probes:
               liveness: &probes
                 enabled: true

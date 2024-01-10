@@ -35,6 +35,8 @@ spec:
               tag: v1.4.0-ls230
             env:
               TZ: ${TIMEZONE}
+              DOCKER_MODS: ghcr.io/themepark-dev/theme.park:bazarr
+              TP_THEME: overseerr
             probes:
               liveness: &probes
                 enabled: true

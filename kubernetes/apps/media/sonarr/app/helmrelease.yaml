@@ -41,7 +41,7 @@ spec:
               SONARR__APPLICATION_URL: "https://sonarr.${SECRET_DOMAIN}"
               SONARR__LOG_LEVEL: info
               DOCKER_MODS: ghcr.io/themepark-dev/theme.park:sonarr
-              TP_THEME: overseer
+              TP_THEME: overseerr
             probes:
               liveness: &probes
                 enabled: true
