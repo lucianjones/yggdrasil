@@ -75,6 +75,15 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           hajimari.io/icon: mdi:jellyfish
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Request Management
+          gethomepage.dev/group: Media
+          gethomepage.dev/icon: jellyseerr.png
+          gethomepage.dev/name: Jellyseerr
+          gethomepage.dev/pod-selector: ""
+          gethomepage.dev/widget.type: "jellyseerr"
+          gethomepage.dev/widget.url: "http://jellyseerr.${SECRET_DOMAIN}"
+          gethomepage.dev/widget.key: "${JELLYSEERR_API_KEY}"
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
