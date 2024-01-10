@@ -163,6 +163,12 @@ spec:
       ingressClassName: internal
       annotations:
         hajimari.io/icon: simple-icons:grafana
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/description: Analytics & monitoring solution
+        gethomepage.dev/group: Admin
+        gethomepage.dev/icon: grafana.png
+        gethomepage.dev/name: Grafana
+        gethomepage.dev/pod-selector: ""
       hosts:
         - &host "grafana.${SECRET_DOMAIN}"
       tls:
