@@ -31,7 +31,7 @@ spec:
           main:
             strategy: RollingUpdate
             image:
-              repository: aleksilassila/reiverr
+              repository: ghcr.io/aleksilassila/reiverr
               tag: v0.8.0
             env:
               TZ: ${TIMEZONE}
