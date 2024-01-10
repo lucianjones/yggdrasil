@@ -14,7 +14,7 @@ spec:
         name: bjw-s
         namespace: flux-system
 
-  interval: 1m
+  interval: 2m
   reconcileStrategy: Revision
   driftDetection:
     mode: enabled
