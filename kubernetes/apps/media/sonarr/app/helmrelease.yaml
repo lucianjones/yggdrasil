@@ -40,6 +40,8 @@ spec:
               SONARR__PORT: &port 8989
               SONARR__APPLICATION_URL: "https://sonarr.${SECRET_DOMAIN}"
               SONARR__LOG_LEVEL: info
+              DOCKER_MODS: ghcr.io/themepark-dev/theme.park:sonarr
+              TP_THEME: overseer
             probes:
               liveness: &probes
                 enabled: true
