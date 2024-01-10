@@ -171,16 +171,8 @@ spec:
         gethomepage.dev/pod-selector: ""
         gethomepage.dev/widget.type: "grafana"
         gethomepage.dev/widget.url: "https://grafana.lucianjones.io"
-        gethomepage.dev/widget.username:
-          valueFrom:
-            secretKeyRef:
-              name: grafana-admin-secret
-              key: admin-user
-        gethomepage.dev/widget.password:
-          valueFrom:
-            secretKeyRef:
-              name: grafana-admin-secret
-              key: admin-password
+        gethomepage.dev/widget.username: ""
+        gethomepage.dev/widget.password: ""
       hosts:
         - &host "grafana.${SECRET_DOMAIN}"
       tls:
