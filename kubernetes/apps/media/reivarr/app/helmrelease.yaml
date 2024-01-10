@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: bazarr
+  name: reivarr
   namespace: media
 spec:
   interval: 15m
@@ -31,8 +31,8 @@ spec:
           main:
             strategy: RollingUpdate
             image:
-              repository: linuxserver/bazarr
-              tag: v1.4.0-ls230
+              repository: aleksilassila/reiverr
+              tag: v0.8.0
             env:
               TZ: ${TIMEZONE}
             probes:
@@ -42,7 +42,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ping
-                    port: &port 6767
+                    port: &port 9494
                   initialDelaySeconds: 10
                   periodSeconds: 10
                   timeoutSeconds: 3
@@ -73,7 +73,7 @@ spec:
         enabled: true
         className: "internal"
         annotations:
-          hajimari.io/icon: ion:text
+          hajimari.io/icon: typcn:film
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -88,21 +88,7 @@ spec:
       config:
         enabled: true
         type: hostPath
-        hostPath: /srv/Bazarr
+        hostPath: /srv/reivarr
         globalMounts:
           - path: /config
             readOnly: false
-      tv:
-        enabled: true
-        type: nfs
-        server: 10.10.10.10
-        path: /mnt/data/media/tv
-        globalMounts:
-          - path: /tv
-      movies:
-        enabled: true
-        type: nfs
-        server: 10.10.10.10
-        path: /mnt/data/media/movies
-        globalMounts:
-          - path: /movies
