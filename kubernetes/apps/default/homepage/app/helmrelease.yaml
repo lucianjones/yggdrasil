@@ -60,3 +60,102 @@ spec:
       requests:
         cpu: 100m
         memory: 128M
+
+    # config:
+    #   services:
+    #     - "Admin":
+    #       - "Grafana":
+    #           "href": "https://grafana.lucianjones.io"
+    #           "icon": "grafana.png"
+    #       - "Prometheus":
+    #           "href": "https://promethues.lucianjones.io"
+    #           "icon": "prometheus.png"
+    #       - "Hubble":
+    #           "href": "https://hubble.lucianjones.io"
+    #           "icon": "cilium.png"
+    #       - "Kubernetes":
+    #           "href": "https://kubernetes.lucianjones.io"
+    #           "icon": "kubernetes.png"
+    #       - "Weave":
+    #           "href": "https://gitops.lucianjones.io"
+    #           "icon": "flux-cd.png"
+    #       - "Traefik":
+    #           "href": "https://traefik.lucianjones.io"
+    #           "icon": "traefik.png"
+    #           "widget":
+    #             "type": "traefik"
+    #             "url": "https://traefik.lucianjones.io"
+    #       - "Skooner":
+    #           "href": "https://skooner.lucianjones.io"
+    #           "icon": "https://skooner.lucianjones.io/favicon.ico"
+    #     - "Media":
+    #       - "Jellyseer":
+    #           "href": "https://jellyseer.lucianjones.io"
+    #           "icon": "jellyseerr.png"
+    #           "widget":
+    #             "key": "yourapikey"
+    #             "type": "jellyseerr"
+    #             "url": "https://jellyseer.lucianjones.io"
+    #       - "Jellyfin":
+    #           "href": "https://jellyfin.lucianjones.io"
+    #           "icon": "jellyfin.png"
+    #           "widget":
+    #             "key": "yourapikey"
+    #             "type": "jellyfin"
+    #             "url": "https://jellyfin.lucianjones.io"
+    #     - "Media Management":
+    #       - "Sonarr":
+    #           "href": "https://sonarr.lucianjones.io"
+    #           "icon": "sonarr.png"
+    #           "widget":
+    #             "key": "yourapikey"
+    #             "type": "sonarr"
+    #             "url": "https://sonarr.lucianjones.io"
+    #       - "Radarr":
+    #           "href": "https://radarr.lucianjones.io"
+    #           "icon": "radarr.png"
+    #           "widget":
+    #             "key": "yourapikey"
+    #             "type": "radarr"
+    #             "url": "https://radarr.lucianjones.io"
+    #       - "Bazarr":
+    #           "href": "https://bazarr.lucianjones.io"
+    #           "icon": "bazarr.png"
+    #           "widget":
+    #             "key": "yourapikey"
+    #             "type": "bazarr"
+    #             "url": "https://bazarr.lucianjones.io"
+    #       - "Prowlarr":
+    #           "href": "https://prowlarr.lucianjones.io"
+    #           "icon": "prowlarr.png"
+    #           "widget":
+    #             "key": "yourapikey"
+    #             "type": "prowlarr"
+    #             "url": "https://prowlarr.lucianjones.io"
+    #     - "Downloads":
+    #       - "Flood":
+    #           "href": "https://flood.lucianjones.io"
+    #           "icon": "flood.png"
+    #           "widget":
+    #             "username": "username"
+    #             "password": "password"
+    #             "type": "flood"
+    #             "url": "https://flood.lucianjones.io"
+    #       - "qBittorrent":
+    #           "href": "https://qbit.lucianjones.io"
+    #           "icon": "qbittorrent.png"
+    #           "widget":
+    #             "username": "username"
+    #             "password": "password"
+    #             "type": "qbittorrent"
+    #             "url": "https://qbit.lucianjones.io"
+    #     - "Productivity":
+    #       - "Vikunja":
+    #           "href": "https://vikunja.lucianjones.io"
+    #           "icon": "vikunja.png"
+    #       - "AFFiNE":
+    #           "href": "https://affine.lucianjones.io"
+    #           "icon": "https://affine.lucianjones.io/favicon.ico"
+    #       - "Rally":
+    #           "href": "https://rallly.lucianjones.io"
+    #           "icon": "https://rallly.lucianjones.io/favicon-32x32.png"
