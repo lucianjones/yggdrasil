@@ -35,9 +35,9 @@ spec:
             image:
               repository: linuxserver/plex
               tag: 1.32.8
-              env:
-                TZ: ${TIMEZONE}
-                PLEX_CLAIM: claim-yU2HuexmhN2R3Uc42Wfv
+            env:
+              TZ: ${TIMEZONE}
+              PLEX_CLAIM: claim-yVEoH84mCPee-C1Pr4B6
             probes:
               liveness: &probes
                 enabled: true
