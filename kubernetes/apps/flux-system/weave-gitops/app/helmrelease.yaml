@@ -38,8 +38,6 @@ spec:
         gethomepage.dev/group: Admin
         gethomepage.dev/icon: flux-cd.png
         gethomepage.dev/name: Weave Gitops
-        gethomepage.dev/widget.type: ""
-        gethomepage.dev/widget.url: ""
         gethomepage.dev/pod-selector: ""
       hosts:
         - host: &host "gitops.${SECRET_DOMAIN}"
