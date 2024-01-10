@@ -35,8 +35,7 @@ spec:
             image:
               repository: linuxserver/plex
               tag: 1.32.8
-              env:
-              JELLYFIN_PublishedServerUrl: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            env:
               TZ: ${TIMEZONE}
             probes:
               liveness: &probes
@@ -64,6 +63,11 @@ spec:
     defaultPodOptions:
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
     service:
       main:
         type: LoadBalancer
@@ -99,20 +103,17 @@ spec:
           - hosts:
               - *host
     persistence:
-      tv:
+      media:
         enabled: true
         type: nfs
         server: 10.10.10.10
-        path: /mnt/data/media/tv
+        path: /mnt/data/media
         globalMounts:
-          - path: /data/tvshows
-      movies:
-        enabled: true
-        type: nfs
-        server: 10.10.10.10
-        path: /mnt/data/media/movies
-        globalMounts:
-          - path: /data/movies
+          - path: /media
+      tmp:
+        type: emptyDir
+      transcode:
+        type: emptyDir
       config:
         enabled: true
         type: hostPath
