@@ -97,7 +97,7 @@ spec:
           # gethomepage.dev/widget.url: "http://plex.${SECRET_DOMAIN}"
           # gethomepage.dev/widget.key: "${JELLYFIN_API_KEY}"
         hosts:
-          - host: *host
+          - host: &host "plex.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
