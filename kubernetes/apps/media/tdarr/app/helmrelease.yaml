@@ -61,7 +61,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  name: tdarr
                   port: 8265
         tls:
           - hosts:
