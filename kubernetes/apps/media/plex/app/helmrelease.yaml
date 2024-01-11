@@ -39,7 +39,7 @@ spec:
               repository: linuxserver/plex
               tag: 1.32.8
             env:
-              PUID: &id ${MEDIA_ID}
+              PUID: &id 1000
               PGID: *id
               TZ: ${TIMEZONE}
               PLEX_CLAIM:

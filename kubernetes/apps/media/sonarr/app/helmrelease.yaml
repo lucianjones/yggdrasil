@@ -39,7 +39,7 @@ spec:
               repository: linuxserver/sonarr
               tag: 4.0.0-develop
             env:
-              PUID: &id ${MEDIA_ID}
+              PUID: &id 1000
               PGID: *id
               TZ: ${TIMEZONE}
               DOCKER_MODS: ghcr.io/themepark-dev/theme.park:sonarr
