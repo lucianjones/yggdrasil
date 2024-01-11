@@ -110,7 +110,7 @@ spec:
       config:
         enabled: true
         type: hostPath
-        hostPath: /mnt/data/configs/prowlarr
+        hostPath: /home/lucian/configs/prowlarr
         globalMounts:
           - path: /config
             readOnly: false

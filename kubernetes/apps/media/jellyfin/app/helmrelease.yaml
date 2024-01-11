@@ -118,18 +118,18 @@ spec:
       config:
         enabled: true
         type: hostPath
-        hostPath: /home/lucian/config
+        hostPath: /home/lucian/configs/jellyfin
         globalMounts:
           - path: /config
             readOnly: false
 
       media:
         enabled: true
-        type: hostPath
-        hostPath: /mnt/data/media
+        type: nfs
+        server: 10.10.10.10
+        path: /mnt/data/media
         globalMounts:
           - path: /data/media
-            readOnly: false
 
       transcode:
         enabled: true

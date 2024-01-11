@@ -101,7 +101,7 @@ spec:
       config:
         enabled: true
         type: hostPath
-        hostPath: /mnt/data/configs/organizr
+        hostPath: /home/lucian/configs/organizr
         globalMounts:
           - path: /config
             readOnly: false

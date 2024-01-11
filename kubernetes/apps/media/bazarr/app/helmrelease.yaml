@@ -110,7 +110,7 @@ spec:
       config:
         enabled: true
         type: hostPath
-        hostPath: /mnt/data/configs/bazarr
+        hostPath: /home/lucian/configs/bazarr
         globalMounts:
           - path: /config
             readOnly: false

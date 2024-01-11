@@ -110,7 +110,7 @@ spec:
       config:
         enabled: true
         type: hostPath
-        hostPath: /mnt/data/configs/sonarr
+        hostPath: /home/lucian/configs/sonarr
         globalMounts:
           - path: /config
             readOnly: false

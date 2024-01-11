@@ -108,7 +108,7 @@ spec:
       config:
         enabled: true
         type: hostPath
-        hostPath: /mnt/data/configs/rdt-client
+        hostPath: /home/lucian/configs/rdtclient
         globalMounts:
           - path: /data/db
             readOnly: false

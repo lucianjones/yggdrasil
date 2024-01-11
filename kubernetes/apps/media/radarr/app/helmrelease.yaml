@@ -111,7 +111,7 @@ spec:
       config:
         enabled: true
         type: hostPath
-        hostPath: /mnt/data/configs/radarr
+        hostPath: /home/lucian/configs/radarr
         globalMounts:
           - path: /config
             readOnly: false

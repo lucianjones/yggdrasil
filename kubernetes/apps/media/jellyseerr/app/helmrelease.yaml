@@ -109,7 +109,7 @@ spec:
       config:
         enabled: true
         type: hostPath
-        hostPath: /mnt/data/configs/jellyseerr
+        hostPath: /home/lucian/configs/jellyseerr
         globalMounts:
           - path: /config
             readOnly: false
