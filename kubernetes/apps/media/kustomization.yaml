@@ -11,5 +11,4 @@ resources:
   - ./sonarr/ks.yaml
   - ./radarr/ks.yaml
   - ./rdt-client/ks.yaml
-  - ./reivarr/ks.yaml
   - ./prowlarr/ks.yaml
