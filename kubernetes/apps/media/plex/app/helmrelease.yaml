@@ -15,7 +15,7 @@ spec:
         namespace: flux-system
       reconcileStrategy: Revision
 
-  interval: 1m
+  interval: 3m
   driftDetection:
     mode: enabled
   maxHistory: 2
@@ -39,8 +39,11 @@ spec:
               repository: linuxserver/plex
               tag: 1.32.8
             env:
+              PUID: &id ${MEDIA_ID}
+              PGID: *id
               TZ: ${TIMEZONE}
-              PLEX_CLAIM: claim-BTez4RNJbxxXZf3xxvdb
+              PLEX_CLAIM:
+
             probes:
               liveness: &probes
                 enabled: true
@@ -56,6 +59,7 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+
             resources:
               requests:
                 gpu.intel.com/i915: 1
@@ -64,38 +68,35 @@ spec:
               limits:
                 gpu.intel.com/i915: 1
                 memory: 8Gi
+
     defaultPodOptions:
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
       securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: *id
+        runAsGroup: *id
+        fsGroup: *id
         fsGroupChangePolicy: OnRootMismatch
+
     service:
       main:
         type: LoadBalancer
-        # loadBalancerIP: *loadBalancerIP
         externalTrafficPolicy: Cluster
         ports:
           http:
             port: *port
+
     ingress:
       main:
         enabled: true
         className: "internal"
         annotations:
-          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           hajimari.io/icon: simple-icons:plex
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Media Server
           gethomepage.dev/group: Media
           gethomepage.dev/icon: plex.png
           gethomepage.dev/name: Plex
-          gethomepage.dev/pod-selector: ""
-          # gethomepage.dev/widget.type: "plex"
-          # gethomepage.dev/widget.url: "http://plex.${SECRET_DOMAIN}"
-          # gethomepage.dev/widget.key: "${JELLYFIN_API_KEY}"
         hosts:
           - host: &host "plex.${SECRET_DOMAIN}"
             paths:
@@ -106,6 +107,7 @@ spec:
         tls:
           - hosts:
               - *host
+
     persistence:
       media:
         enabled: true
@@ -113,15 +115,18 @@ spec:
         server: 10.10.10.10
         path: /mnt/data/media
         globalMounts:
-          - path: /media
-      tmp:
-        type: emptyDir
-      transcode:
-        type: emptyDir
+          - path: /data/media
+
       config:
         enabled: true
         type: hostPath
-        hostPath: /srv/plex
+        hostPath: /mnt/data/configs/plex
         globalMounts:
           - path: /config
             readOnly: false
+
+      tmp:
+        type: emptyDir
+
+      transcode:
+        type: emptyDir

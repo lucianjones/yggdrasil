@@ -5,7 +5,6 @@ metadata:
   name: radarr
   namespace: media
 spec:
-  interval: 15m
   chart:
     spec:
       chart: app-template
@@ -14,6 +13,11 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      reconcileStrategy: Revision
+
+  interval: 3m
+  driftDetection:
+    mode: enabled
   maxHistory: 2
   install:
     remediation:
@@ -24,6 +28,7 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+
   values:
     controllers:
       main:
@@ -34,14 +39,12 @@ spec:
               repository: linuxserver/radarr
               tag: 5.2.6
             env:
+              PUID: &id ${MEDIA_ID}
+              PGID: *id
               TZ: ${TIMEZONE}
-              COMPlus_EnableDiagnostics: "0"
-              RADARR__INSTANCE_NAME: Radarr
-              RADARR__PORT: &port 7878
-              RADARR__APPLICATION_URL: "https://radarr.${SECRET_DOMAIN}"
-              RADARR__LOG_LEVEL: info
               DOCKER_MODS: ghcr.io/themepark-dev/theme.park:radarr
               TP_THEME: overseerr
+
             probes:
               liveness: &probes
                 enabled: true
@@ -49,7 +52,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ping
-                    port: *port
+                    port: &port 7878
                   initialDelaySeconds: 10
                   periodSeconds: 10
                   timeoutSeconds: 3
@@ -57,24 +60,27 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+
             resources:
               requests:
                 cpu: 10m
                 memory: 512Mi
               limits:
                 memory: 2000Mi
+
     defaultPodOptions:
       podSecurityContext:
-        privileged: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: *id
+        runAsGroup: *id
+        fsGroup: *id
         fsGroupChangePolicy: "OnRootMismatch"
+
     service:
       main:
         ports:
           http:
             port: *port
+
     ingress:
       main:
         enabled: true
@@ -86,10 +92,10 @@ spec:
           gethomepage.dev/group: Media Management
           gethomepage.dev/icon: radarr.png
           gethomepage.dev/name: Radarr
-          gethomepage.dev/pod-selector: ""
           gethomepage.dev/widget.type: "radarr"
           gethomepage.dev/widget.url: "http://radarr.${SECRET_DOMAIN}"
           gethomepage.dev/widget.key: "${RADARR_API_KEY}"
+
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -100,19 +106,20 @@ spec:
         tls:
           - hosts:
               - *host
+
     persistence:
       config:
         enabled: true
         type: hostPath
-        hostPath: /srv/radarr
+        hostPath: /mnt/data/configs/radarr
         globalMounts:
           - path: /config
             readOnly: false
 
-      media:
+      data:
         enabled: true
         type: nfs
         server: 10.10.10.10
         path: /mnt/data
         globalMounts:
-          - path: /mnt/data
+          - path: /data

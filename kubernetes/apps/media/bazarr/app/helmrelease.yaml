@@ -5,7 +5,6 @@ metadata:
   name: bazarr
   namespace: media
 spec:
-  interval: 15m
   chart:
     spec:
       chart: app-template
@@ -14,6 +13,11 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      reconcileStrategy: Revision
+
+  interval: 3m
+  driftDetection:
+    mode: enabled
   maxHistory: 2
   install:
     remediation:
@@ -24,6 +28,7 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+
   values:
     controllers:
       main:
@@ -34,9 +39,12 @@ spec:
               repository: linuxserver/bazarr
               tag: v1.4.0-ls230
             env:
+              PUID: &id ${MEDIA_ID}
+              PGID: *id
               TZ: ${TIMEZONE}
               DOCKER_MODS: ghcr.io/themepark-dev/theme.park:bazarr
               TP_THEME: overseerr
+
             probes:
               liveness: &probes
                 enabled: true
@@ -52,24 +60,27 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+
             resources:
               requests:
                 cpu: 10m
                 memory: 512Mi
               limits:
                 memory: 2000Mi
+
     defaultPodOptions:
       podSecurityContext:
-        privileged: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: *id
+        runAsGroup: *id
+        fsGroup: *id
         fsGroupChangePolicy: "OnRootMismatch"
+
     service:
       main:
         ports:
           http:
             port: *port
+
     ingress:
       main:
         enabled: true
@@ -81,7 +92,6 @@ spec:
           gethomepage.dev/group: Media Management
           gethomepage.dev/icon: bazarr.png
           gethomepage.dev/name: Bazarr
-          gethomepage.dev/pod-selector: ""
           gethomepage.dev/widget.type: "bazarr"
           gethomepage.dev/widget.url: "http://bazarr.${SECRET_DOMAIN}"
           gethomepage.dev/widget.key: "${BAZARR_API_KEY}"
@@ -95,25 +105,20 @@ spec:
         tls:
           - hosts:
               - *host
+
     persistence:
       config:
         enabled: true
         type: hostPath
-        hostPath: /srv/Bazarr
+        hostPath: /mnt/data/configs/bazarr
         globalMounts:
           - path: /config
             readOnly: false
+
       tv:
         enabled: true
         type: nfs
         server: 10.10.10.10
-        path: /mnt/data/media/tv
+        path: /mnt/data/media
         globalMounts:
-          - path: /tv
-      movies:
-        enabled: true
-        type: nfs
-        server: 10.10.10.10
-        path: /mnt/data/media/movies
-        globalMounts:
-          - path: /movies
+          - path: data/media

@@ -5,7 +5,6 @@ metadata:
   name: organizr
   namespace: media
 spec:
-  interval: 15m
   chart:
     spec:
       chart: app-template
@@ -14,6 +13,11 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      reconcileStrategy: Revision
+
+  interval: 3m
+  driftDetection:
+    mode: enabled
   maxHistory: 2
   install:
     remediation:
@@ -24,6 +28,7 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+
   values:
     controllers:
       main:
@@ -34,7 +39,10 @@ spec:
               repository: organizr/organizr
               tag: latest
             env:
+              PUID: &id ${MEDIA_ID}
+              PGID: *id
               TZ: ${TIMEZONE}
+
             probes:
               liveness: &probes
                 enabled: true
@@ -50,24 +58,28 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+
             resources:
               requests:
                 cpu: 10m
                 memory: 512Mi
               limits:
                 memory: 2000Mi
+
     defaultPodOptions:
       podSecurityContext:
         privileged: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: *id
+        runAsGroup: *id
+        fsGroup: *id
         fsGroupChangePolicy: "OnRootMismatch"
+
     service:
       main:
         ports:
           http:
             port: *port
+
     ingress:
       main:
         enabled: true
@@ -84,11 +96,12 @@ spec:
         tls:
           - hosts:
               - *host
+
     persistence:
       config:
         enabled: true
         type: hostPath
-        hostPath: /srv/organizr
+        hostPath: /mnt/data/configs/organizr
         globalMounts:
           - path: /config
             readOnly: false

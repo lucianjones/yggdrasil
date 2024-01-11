@@ -5,7 +5,6 @@ metadata:
   name: rdt-client
   namespace: media
 spec:
-  interval: 15m
   chart:
     spec:
       chart: app-template
@@ -14,6 +13,11 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      reconcileStrategy: Revision
+
+  interval: 3m
+  driftDetection:
+    mode: enabled
   maxHistory: 2
   install:
     remediation:
@@ -24,6 +28,7 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+
   values:
     controllers:
       main:
@@ -34,7 +39,10 @@ spec:
               repository: rogerfar/rdtclient
               tag: 2.0.53
             env:
+              PUID: &id ${MEDIA_ID}
+              PGID: *id
               TZ: ${TIMEZONE}
+
             probes:
               liveness: &probes
                 enabled: true
@@ -50,24 +58,27 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+
             resources:
               requests:
                 cpu: 10m
                 memory: 512Mi
               limits:
-                memory: 2000Mi
+                memory: 3000Mi
+
     defaultPodOptions:
       podSecurityContext:
-        privileged: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: *id
+        runAsGroup: *id
+        fsGroup: *id
         fsGroupChangePolicy: "OnRootMismatch"
+
     service:
       main:
         ports:
           http:
             port: *port
+
     ingress:
       main:
         enabled: true
@@ -79,11 +90,9 @@ spec:
           gethomepage.dev/group: Downloads
           gethomepage.dev/icon: rdt-client.png
           gethomepage.dev/name: RDT
-          gethomepage.dev/pod-selector: ""
           gethomepage.dev/widget.type: "qbittorrent"
           gethomepage.dev/widget.url: "http://rdt-client.${SECRET_DOMAIN}"
-          gethomepage.dev/widget.username: ""
-          gethomepage.dev/widget.password: ""
+
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -94,16 +103,17 @@ spec:
         tls:
           - hosts:
               - *host
+
     persistence:
       config:
         enabled: true
         type: hostPath
-        hostPath: /srv/rdt-client
+        hostPath: /mnt/data/configs/rdt-client
         globalMounts:
           - path: /data/db
             readOnly: false
 
-      media:
+      downloads:
         enabled: true
         type: nfs
         server: 10.10.10.10

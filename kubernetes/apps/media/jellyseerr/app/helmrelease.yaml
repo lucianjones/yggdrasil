@@ -5,7 +5,6 @@ metadata:
   name: jellyseerr
   namespace: media
 spec:
-  interval: 15m
   chart:
     spec:
       chart: app-template
@@ -14,6 +13,11 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      reconcileStrategy: Revision
+
+  interval: 3m
+  driftDetection:
+    mode: enabled
   maxHistory: 2
   install:
     remediation:
@@ -24,6 +28,7 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+
   values:
     controllers:
       main:
@@ -35,6 +40,7 @@ spec:
               tag: 1.7.0
             env:
               TZ: ${TIMEZONE}
+
             probes:
               liveness: &probes
                 enabled: true
@@ -50,24 +56,27 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
+
             resources:
               requests:
                 cpu: 10m
                 memory: 512Mi
               limits:
                 memory: 2000Mi
+
     defaultPodOptions:
       podSecurityContext:
-        privileged: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: &id ${MEDIA_ID}
+        runAsGroup: *id
+        fsGroup: *id
         fsGroupChangePolicy: "OnRootMismatch"
+
     service:
       main:
         ports:
           http:
             port: *port
+
     ingress:
       main:
         enabled: true
@@ -80,7 +89,6 @@ spec:
           gethomepage.dev/group: Media
           gethomepage.dev/icon: jellyseerr.png
           gethomepage.dev/name: Jellyseerr
-          gethomepage.dev/pod-selector: ""
           gethomepage.dev/widget.type: "jellyseerr"
           gethomepage.dev/widget.url: "http://jellyseerr.${SECRET_DOMAIN}"
           gethomepage.dev/widget.key: "${JELLYSEERR_API_KEY}"
@@ -94,11 +102,12 @@ spec:
         tls:
           - hosts:
               - *host
+
     persistence:
       config:
         enabled: true
         type: hostPath
-        hostPath: /srv/jellyseerr
+        hostPath: /mnt/data/configs/jellyseerr
         globalMounts:
-          - path: /app/config
+          - path: /config
             readOnly: false
