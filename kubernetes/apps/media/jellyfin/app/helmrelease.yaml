@@ -43,8 +43,8 @@ spec:
               PGID: *id
               TZ: ${TIMEZONE}
               JELLYFIN_PublishedServerUrl: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-              JELLYFIN_FFmpeg__probesize: 50000000
-              JELLYFIN_FFmpeg__analyzeduration: 50000000
+              # JELLYFIN_FFmpeg__probesize: 50000000
+              # JELLYFIN_FFmpeg__analyzeduration: 50000000
 
             probes:
               liveness: &probes
@@ -125,11 +125,11 @@ spec:
 
       media:
         enabled: true
-        type: nfs
-        server: 10.10.10.10
-        path: /mnt/data/media
+        type: hostPath
+        hostPath: /mnt/data/media
         globalMounts:
           - path: /data/media
+            readOnly: false
 
       transcode:
         enabled: true
