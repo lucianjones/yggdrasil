@@ -18,6 +18,7 @@ resources:
   - ./jameswynn.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
+  - ./k8s-home-lab.yaml
   - ./kubernetes-dashboard.yaml
   - ./metrics-server.yaml
   - ./node-feature-discovery.yaml
