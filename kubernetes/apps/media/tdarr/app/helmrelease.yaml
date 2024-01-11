@@ -34,6 +34,7 @@ spec:
       TZ: ${TIMEZONE}
       PUID: "1000"
       PGID: "1000"
+      internalNode: "true"
 
     service:
       main:
@@ -68,7 +69,7 @@ spec:
               - *host
 
     node:
-      enabled: true
+      enabled: false
       id: node
       resources:
         requests:
