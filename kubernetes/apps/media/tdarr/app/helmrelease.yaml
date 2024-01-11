@@ -35,15 +35,15 @@ spec:
       PUID: "1000"
       PGID: "1000"
 
-    # service:
-    #   main:
-    #     ports:
-    #       http:
-    #         port: 8265
-    #       server:
-    #         enabled: true
-    #         protocol: TCP
-    #         port: 8266
+    service:
+      main:
+        ports:
+          http:
+            port: 8265
+          server:
+            enabled: true
+            protocol: TCP
+            port: 8266
 
     ingress:
       main:
@@ -62,7 +62,7 @@ spec:
               - path: /
                 service:
                   name: main
-                  port: http
+                  port: 8265
         tls:
           - hosts:
               - *host
