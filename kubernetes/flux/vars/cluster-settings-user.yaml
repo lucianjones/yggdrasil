@@ -5,4 +5,4 @@ metadata:
   name: cluster-settings-user
   namespace: flux-system
 data:
-  MEDIA_ID: 1000
+  SETTINGS_PLACEHOLDER: "settings-value"
