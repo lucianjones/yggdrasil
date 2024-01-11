@@ -43,6 +43,8 @@ spec:
               PGID: *id
               TZ: ${TIMEZONE}
               JELLYFIN_PublishedServerUrl: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+              JELLYFIN_FFmpeg__probesize: 50000000
+              JELLYFIN_FFmpeg__analyzeduration: 50000000
 
             probes:
               liveness: &probes
