@@ -39,7 +39,7 @@ spec:
               repository: rogerfar/rdtclient
               tag: 2.0.53
             env:
-              PUID: &id 1000
+              PUID: &id "1000"
               PGID: *id
               TZ: ${TIMEZONE}
 

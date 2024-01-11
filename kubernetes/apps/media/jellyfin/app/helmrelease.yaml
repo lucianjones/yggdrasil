@@ -39,7 +39,7 @@ spec:
               repository: linuxserver/jellyfin
               tag: 10.8.13
             env:
-              PUID: &id 1000
+              PUID: &id "1000"
               PGID: *id
               TZ: ${TIMEZONE}
               JELLYFIN_PublishedServerUrl: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
