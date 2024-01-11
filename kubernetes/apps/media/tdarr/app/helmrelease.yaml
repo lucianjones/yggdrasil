@@ -7,11 +7,11 @@ metadata:
 spec:
   chart:
     spec:
-      chart: tdarr
-      version: 5.0.0
+      chart: app-template
+      version: 2.4.0
       sourceRef:
         kind: HelmRepository
-        name: k8s-home-lab
+        name: bjw-s
         namespace: flux-system
       reconcileStrategy: Revision
 
@@ -30,11 +30,59 @@ spec:
     keepHistory: false
 
   values:
-    env:
-      TZ: ${TIMEZONE}
-      PUID: "1000"
-      PGID: "1000"
-      internalNode: "true"
+    controllers:
+      main:
+        containers:
+          main:
+            strategy: RollingUpdate
+            image:
+              repository: ghcr.io/haveagitgat/tdarr
+              tag: 2.17.01
+            env:
+              PUID: &id "1000"
+              PGID: *id
+              TZ: ${TIMEZONE}
+              serverIP: 0.0.0.0
+              serverPort: 8266
+              webUIPort: 8265
+              internalNode: true
+              inContainer: true
+              ffmpegVersion: 6
+              nodeName: MyInternalNode
+
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8265
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 3
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+
+            resources:
+              requests:
+                gpu.intel.com/i915: 1
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 8Gi
+
+    defaultPodOptions:
+      nodeSelector:
+        intel.feature.node.kubernetes.io/gpu: "true"
+      podSecurityContext:
+        runAsUser: *id
+        runAsGroup: *id
+        fsGroup: *id
+        fsGroupChangePolicy: "OnRootMismatch"
 
     service:
       main:
@@ -49,57 +97,55 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "internal"
+        className: "internal"
         annotations:
-          hajimari.io/icon: simple-icons:jellyfin
+          hajimari.io/icon: mdi:television-classic
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Conditional Transcoding Application
+          gethomepage.dev/description: TV Manager
           gethomepage.dev/group: Media Management
-          gethomepage.dev/icon: tdarr.png
-          gethomepage.dev/name: Tdarr
+          gethomepage.dev/icon: sonarr.png
+          gethomepage.dev/name: Sonarr
+          gethomepage.dev/widget.type: "sonarr"
+          gethomepage.dev/widget.url: "http://sonarr.${SECRET_DOMAIN}"
+          gethomepage.dev/widget.key: "${SONARR_API_KEY}"
         hosts:
-          - host: &host "tdarr.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
-                  name: tdarr
-                  port: 8265
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-
-    node:
-      enabled: false
-      id: node
-      resources:
-        requests:
-          gpu.intel.com/i915: 1
-          cpu: 100m
-          memory: 512Mi
-        limits:
-          gpu.intel.com/i915: 1
-          memory: 8Gi
 
     persistence:
       config:
         enabled: true
         type: hostPath
         hostPath: /home/lucian/configs/tdarr/config
-        mountPath: /app/config
+        globalMounts:
+          - path: /app/config
+            readOnly: false
 
       data:
         enabled: true
         type: hostPath
         hostPath: /home/lucian/configs/tdarr/data
-        mountPath: /app/server
+        globalMounts:
+          - path: /app/server
+            readOnly: false
 
       media:
         enabled: true
         type: nfs
         server: 10.10.10.10
         path: /mnt/data/media
+        globalMounts:
+          - path: /media
 
       shared:
         enabled: true
         type: emptyDir
-        mountPath: /shared
+        globalMounts:
+          - path: /shared
