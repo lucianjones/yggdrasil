@@ -118,7 +118,7 @@ spec:
       config:
         enabled: true
         type: hostPath
-        hostPath: /mnt/data/configs/jellyfin
+        hostPath: /home/lucian/config
         globalMounts:
           - path: /config
             readOnly: false
