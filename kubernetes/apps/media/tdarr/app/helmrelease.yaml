@@ -148,8 +148,8 @@ spec:
 
       temp:
         enabled: true
-        type: nfs
-        server: 10.10.10.10
-        path: /mnt/data/transcode
+        type: hostPath
+        hostPath: /home/lucian/configs/tdarr/temp
         globalMounts:
           - path: /temp
+            readOnly: false
