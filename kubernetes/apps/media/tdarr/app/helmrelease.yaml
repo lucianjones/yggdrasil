@@ -146,8 +146,10 @@ spec:
         globalMounts:
           - path: /media
 
-      shared:
+      temp:
         enabled: true
-        type: emptyDir
+        type: nfs
+        server: 10.10.10.10
+        path: /mnt/data/transcode
         globalMounts:
-          - path: /shared
+          - path: /temp
