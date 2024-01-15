@@ -83,8 +83,9 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "internal"
+        className: "external"
         annotations:
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           hajimari.io/icon: fluent:organization-20-regular
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
