@@ -103,13 +103,10 @@ spec:
         annotations:
           hajimari.io/icon: mdi:television-classic
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: TV Manager
+          gethomepage.dev/description: Automated transcoding
           gethomepage.dev/group: Media Management
-          gethomepage.dev/icon: sonarr.png
-          gethomepage.dev/name: Sonarr
-          gethomepage.dev/widget.type: "sonarr"
-          gethomepage.dev/widget.url: "http://sonarr.${SECRET_DOMAIN}"
-          gethomepage.dev/widget.key: "${SONARR_API_KEY}"
+          gethomepage.dev/icon: tdarr.png
+          gethomepage.dev/name: Tdarr
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
