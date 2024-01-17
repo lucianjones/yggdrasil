@@ -6,8 +6,8 @@ resources:
   - ./bazarr/ks.yaml
   - ./jellyfin/ks.yaml
   - ./jellyseerr/ks.yaml
+  - ./lidarr/ks.yaml
   - ./organizr/ks.yaml
-  # - ./plex/ks.yaml
   - ./sonarr/ks.yaml
   - ./radarr/ks.yaml
   - ./rdt-client/ks.yaml
