@@ -6,7 +6,6 @@ resources:
   - ./bazarr/ks.yaml
   - ./jellyfin/ks.yaml
   - ./jellyseerr/ks.yaml
-  - ./lidarr/ks.yaml
   - ./organizr/ks.yaml
   - ./sonarr/ks.yaml
   - ./radarr/ks.yaml
