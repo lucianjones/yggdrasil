@@ -97,13 +97,13 @@ spec:
           gethomepage.dev/widget.key: "${LIDARR_API_KEY}"
 
         hosts:
-          - host: &lidarr_host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &lidarrHost "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
                   name: main
                   port: http
-          - host: &deemix_host deemix.${{SECRET_DOMAIN}}
+          - host: &deemixHost deemix.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
@@ -111,8 +111,8 @@ spec:
                   port: deemix
         tls:
           - hosts:
-              - *lidarr_host
-              - *deemix_host
+              - *lidarrHost
+              - *deemixHost
 
     persistence:
       lidarr_config:
