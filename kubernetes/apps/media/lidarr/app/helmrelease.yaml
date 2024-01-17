@@ -115,7 +115,7 @@ spec:
               - *deemixHost
 
     persistence:
-      lidarr_config:
+      lidarrConfig:
         enabled: true
         type: hostPath
         hostPath: /home/lucian/configs/lidarr
@@ -123,7 +123,7 @@ spec:
           - path: /config
             readOnly: false
 
-      deemix_config:
+      deemixConfig:
         enabled: true
         type: hostPath
         hostPath: /home/lucian/configs/deemix
