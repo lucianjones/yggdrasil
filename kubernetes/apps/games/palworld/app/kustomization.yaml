@@ -4,5 +4,3 @@ kind: Kustomization
 namespace: games
 resources:
   - ./helmrelease.yaml
-  # - ./valheim-secret.yaml
-  - ./dnsendpoint.yaml
