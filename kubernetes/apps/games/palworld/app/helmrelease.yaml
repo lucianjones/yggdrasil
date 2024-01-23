@@ -84,7 +84,7 @@ spec:
       data:
         enabled: true
         type: hostPath
-        hostPath: /mnt/data/configs/palworld
+        hostPath: /home/lucian/configs/palworld
         globalMounts:
           - path: /palworld
             readOnly: false
