@@ -1,0 +1,96 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: valheim
+  namespace: games
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            strategy: RollingUpdate
+            image:
+              repository: lloesche/valheim-server
+              tag: latest
+            env:
+              SERVER_NAME: liveheim-laughheim-loveheim
+              WORLD_NAME: tmp
+              SERVER_PASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: serverpassword
+                    key: password
+              SERVER_PUBLIC: true
+              SERVER_ARGS: "-crossplay"
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                memory: 10Gi
+    service:
+      main:
+        annotations:
+          io.cilium/lb-ipam-ips: 10.10.10.105
+        type: LoadBalancer
+        ports:
+          http:
+            enabled: false
+          gameport:
+            enabled: true
+            port: 2456
+            protocol: UDP
+          queryport:
+            enabled: true
+            port: 2457
+            protocol: UDP
+          statusport:
+            enabled: true
+            port: 8080
+            protocol: TCP
+    ingress:
+      main:
+        enabled: false
+    persistence:
+      config:
+        enabled: true
+        type: hostPath
+        hostPath: /mnt/data/configs/valheim/config
+        globalMounts:
+          - path: /config
+            readOnly: false
+      data:
+        enabled: true
+        type: hostPath
+        hostPath: /mnt/data/configs/valheim/data
+        globalMounts:
+          - path: /opt/valheim
+            readOnly: false
