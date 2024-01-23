@@ -2,14 +2,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app valheim
+  name: &app palworld
   namespace: flux-system
 spec:
-  targetNamespace: valheim
+  targetNamespace: games
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/valheim/valheim/app
+  path: ./kubernetes/apps/games/palworld/app
   prune: true
   sourceRef:
     kind: GitRepository
