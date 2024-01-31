@@ -34,13 +34,19 @@ spec:
               repository: thijsvanloef/palworld-server-docker
               tag: latest
             env:
+              PLAYERS: 16
               PUID: 1000
               PGID: 1000
-              MULTITHREADING: true
+              MULTITHREADING: false
+              SERVER_NAME: blueberry_fuckleheads
               RCON_ENABLES: true
               RCON_PORT: 25575
               ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
               COMMUNITY: false
+              DELETE_OLD_BACKUPS: true
+              OLD_BACKUP_DAYS: 10
+              DEATH_PENALTY: ItemAndEquipment
+              ENABLE_NON_LOGIN_PENALTY: False
             probes:
               liveness:
                 enabled: false
