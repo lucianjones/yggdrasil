@@ -47,6 +47,8 @@ spec:
               OLD_BACKUP_DAYS: 10
               DEATH_PENALTY: ItemAndEquipment
               ENABLE_NON_LOGIN_PENALTY: False
+              PAL_EGG_DEFAULT_HATCHING_TIME: 0
+              BUILD_OBJECT_DETERIORATION_DAMAGE_RATE: 0
             probes:
               liveness:
                 enabled: false
@@ -59,7 +61,7 @@ spec:
                 cpu: 10m
                 memory: 512Mi
               limits:
-                memory: 10Gi
+                memory: 12Gi
 
     service:
       main:
