@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -31,15 +31,15 @@ spec:
 
   values:
     controllers:
-      main:
+      jellyseerr:
+        strategy: RollingUpdate
         containers:
-          main:
-            strategy: RollingUpdate
+          app:
             image:
               repository: fallenbagel/jellyseerr
               tag: 1.9.2
             env:
-              PUID: &id "1000"
+              PUID: &id 1000
               PGID: *id
               TZ: ${TIMEZONE}
 
@@ -67,20 +67,21 @@ spec:
                 memory: 2000Mi
 
     defaultPodOptions:
-      podSecurityContext:
-        runAsUser: &id ${MEDIA_ID}
+      securityContext:
+        runAsUser: *id
         runAsGroup: *id
         fsGroup: *id
         fsGroupChangePolicy: "OnRootMismatch"
 
     service:
-      main:
+      app:
+        controller: jellyseerr
         ports:
           http:
             port: *port
 
     ingress:
-      main:
+      app:
         enabled: true
         className: "external"
         annotations:
@@ -99,7 +100,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:

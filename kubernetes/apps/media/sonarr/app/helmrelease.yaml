@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.2.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -31,15 +31,15 @@ spec:
 
   values:
     controllers:
-      main:
+      sonarr:
+        strategy: RollingUpdate
         containers:
-          main:
-            strategy: RollingUpdate
+          app:
             image:
               repository: linuxserver/sonarr
               tag: 4.0.6-develop
             env:
-              PUID: &id "1000"
+              PUID: &id 1000
               PGID: *id
               TZ: ${TIMEZONE}
               DOCKER_MODS: ghcr.io/themepark-dev/theme.park:sonarr
@@ -69,20 +69,21 @@ spec:
                 memory: 2000Mi
 
     defaultPodOptions:
-      podSecurityContext:
+      securityContext:
         runAsUser: *id
         runAsGroup: *id
         fsGroup: *id
         fsGroupChangePolicy: "OnRootMismatch"
 
     service:
-      main:
+      app:
+        controller: sonarr
         ports:
           http:
             port: *port
 
     ingress:
-      main:
+      app:
         enabled: true
         className: "external"
         annotations:
@@ -101,7 +102,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:

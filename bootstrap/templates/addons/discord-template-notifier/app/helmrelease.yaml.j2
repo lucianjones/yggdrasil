@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.2.1
       interval: 30m
       sourceRef:
         kind: HelmRepository
@@ -27,11 +27,11 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      discord:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/morphy2k/rss-forwarder
               tag: 0.7.1
@@ -49,9 +49,9 @@ spec:
               limits:
                 memory: 64M
     service:
-      main: *disabled
+      app: *disabled
     ingress:
-      main: *disabled
+      discord: *disabled
     persistence:
       config:
         enabled: true
