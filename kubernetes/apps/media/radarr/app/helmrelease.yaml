@@ -37,7 +37,7 @@ spec:
             strategy: RollingUpdate
             image:
               repository: linuxserver/radarr
-              tag: 5.2.6
+              tag: 5.7.0
             env:
               PUID: &id "1000"
               PGID: *id
