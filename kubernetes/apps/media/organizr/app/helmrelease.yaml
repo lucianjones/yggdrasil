@@ -82,7 +82,7 @@ spec:
             port: *port
 
     ingress:
-      organizr:
+      app:
         enabled: true
         className: "external"
         annotations:

@@ -90,7 +90,7 @@ spec:
             port: *port
 
     ingress:
-      jellyfin:
+      app:
         enabled: true
         className: "external"
         annotations:

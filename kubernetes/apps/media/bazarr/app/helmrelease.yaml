@@ -83,7 +83,7 @@ spec:
             port: *port
 
     ingress:
-      bazarr:
+      app:
         enabled: true
         className: "internal"
         annotations:

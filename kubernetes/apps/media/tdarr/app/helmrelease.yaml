@@ -98,7 +98,7 @@ spec:
             port: 8266
 
     ingress:
-      tdarr:
+      app:
         enabled: true
         className: "external"
         annotations:

@@ -31,7 +31,7 @@ spec:
 
   values:
     controllers:
-      rdtclient:
+      rdt-client:
         containers:
           app:
             strategy: RollingUpdate
@@ -75,13 +75,13 @@ spec:
 
     service:
       app:
-        controller: rdtclient
+        controller: rdt-client
         ports:
           http:
             port: *port
 
     ingress:
-      rdtclient:
+      app:
         enabled: true
         className: "external"
         annotations:

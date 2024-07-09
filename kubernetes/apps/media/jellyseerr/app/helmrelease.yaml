@@ -81,7 +81,7 @@ spec:
             port: *port
 
     ingress:
-      jellyseerr:
+      app:
         enabled: true
         className: "external"
         annotations:

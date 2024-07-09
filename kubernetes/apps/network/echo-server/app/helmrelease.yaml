@@ -25,7 +25,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      echo:
+      echo-server:
         replicas: 2
         strategy: RollingUpdate
         containers:
@@ -62,13 +62,12 @@ spec:
             runAsGroup: 568
     service:
       app:
-        controller: echo
+        controller: echo-server
         ports:
           http:
             port: *port
     ingress:
-      echo:
-        enabled: true
+      app:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
