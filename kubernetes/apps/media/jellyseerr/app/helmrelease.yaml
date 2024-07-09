@@ -31,9 +31,9 @@ spec:
 
   values:
     controllers:
-      main:
+      jellyseerr:
         containers:
-          main:
+          app:
             strategy: RollingUpdate
             image:
               repository: fallenbagel/jellyseerr
@@ -74,13 +74,14 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
 
     service:
-      main:
+      app:
+        controller: jellyseerr
         ports:
           http:
             port: *port
 
     ingress:
-      main:
+      jellyseerr:
         enabled: true
         className: "external"
         annotations:
@@ -99,7 +100,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:

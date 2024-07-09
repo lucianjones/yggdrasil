@@ -31,9 +31,9 @@ spec:
 
   values:
     controllers:
-      main:
+      prowlarr:
         containers:
-          main:
+          app:
             strategy: RollingUpdate
             image:
               repository: linuxserver/prowlarr
@@ -76,13 +76,14 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
 
     service:
-      main:
+      app:
+        controller: prowlarr
         ports:
           http:
             port: *port
 
     ingress:
-      main:
+      prowlarr:
         enabled: true
         className: "external"
         annotations:
@@ -101,7 +102,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:

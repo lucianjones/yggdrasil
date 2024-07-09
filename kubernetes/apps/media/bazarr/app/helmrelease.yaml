@@ -31,9 +31,9 @@ spec:
 
   values:
     controllers:
-      main:
+      bazarr:
         containers:
-          main:
+          app:
             strategy: RollingUpdate
             image:
               repository: linuxserver/bazarr
@@ -76,13 +76,14 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
 
     service:
-      main:
+      app:
+        controller: bazarr
         ports:
           http:
             port: *port
 
     ingress:
-      main:
+      bazarr:
         enabled: true
         className: "internal"
         annotations:
@@ -100,7 +101,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:

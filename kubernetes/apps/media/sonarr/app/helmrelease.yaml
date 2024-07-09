@@ -31,9 +31,9 @@ spec:
 
   values:
     controllers:
-      main:
+      sonarr:
         containers:
-          main:
+          app:
             strategy: RollingUpdate
             image:
               repository: linuxserver/sonarr
@@ -76,13 +76,14 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
 
     service:
-      main:
+      app:
+        controller: sonarr
         ports:
           http:
             port: *port
 
     ingress:
-      main:
+      sonarr:
         enabled: true
         className: "external"
         annotations:
@@ -101,7 +102,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:

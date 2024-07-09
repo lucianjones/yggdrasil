@@ -31,9 +31,9 @@ spec:
 
   values:
     controllers:
-      main:
+      tdarr:
         containers:
-          main:
+          app:
             strategy: RollingUpdate
             image:
               repository: ghcr.io/haveagitgat/tdarr
@@ -85,7 +85,8 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
 
     service:
-      main:
+      app:
+        controller: tdarr
         type: LoadBalancer
         externalTrafficPolicy: Cluster
         ports:
@@ -97,7 +98,7 @@ spec:
             port: 8266
 
     ingress:
-      main:
+      tdarr:
         enabled: true
         className: "external"
         annotations:
@@ -113,7 +114,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:

@@ -31,9 +31,9 @@ spec:
 
   values:
     controllers:
-      main:
+      rdtclient:
         containers:
-          main:
+          app:
             strategy: RollingUpdate
             image:
               repository: rogerfar/rdtclient
@@ -74,13 +74,14 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
 
     service:
-      main:
+      app:
+        controller: rdtclient
         ports:
           http:
             port: *port
 
     ingress:
-      main:
+      rdtclient:
         enabled: true
         className: "external"
         annotations:
@@ -99,7 +100,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:

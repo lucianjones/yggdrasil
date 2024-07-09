@@ -31,9 +31,9 @@ spec:
 
   values:
     controllers:
-      main:
+      organizr:
         containers:
-          main:
+          app:
             strategy: RollingUpdate
             image:
               repository: organizr/organizr
@@ -75,13 +75,14 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
 
     service:
-      main:
+      app:
+        controller: organizr
         ports:
           http:
             port: *port
 
     ingress:
-      main:
+      organizr:
         enabled: true
         className: "external"
         annotations:
@@ -92,7 +93,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:

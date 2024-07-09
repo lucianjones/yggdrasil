@@ -31,9 +31,9 @@ spec:
 
   values:
     controllers:
-      main:
+      jellyfin:
         containers:
-          main:
+          app:
             strategy: RollingUpdate
             image:
               repository: linuxserver/jellyfin
@@ -81,7 +81,8 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
 
     service:
-      main:
+      app:
+        controller: jellyfin
         type: LoadBalancer
         externalTrafficPolicy: Cluster
         ports:
@@ -89,7 +90,7 @@ spec:
             port: *port
 
     ingress:
-      main:
+      jellyfin:
         enabled: true
         className: "external"
         annotations:
@@ -108,7 +109,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
