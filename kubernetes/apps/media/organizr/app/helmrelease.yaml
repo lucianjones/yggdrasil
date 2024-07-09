@@ -68,7 +68,6 @@ spec:
 
     defaultPodOptions:
       securityContext:
-        privileged: true
         runAsUser: *id
         runAsGroup: *id
         fsGroup: *id
