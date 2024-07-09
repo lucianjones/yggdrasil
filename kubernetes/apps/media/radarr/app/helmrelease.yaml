@@ -36,30 +36,26 @@ spec:
         containers:
           app:
             image:
-              repository: linuxserver/radarr
+              repository: ghcr.io/onedr0p/radarr
               tag: 5.7.0
             env:
-              PUID: &id 1000
-              PGID: *id
-              TZ: ${TIMEZONE}
-              DOCKER_MODS: ghcr.io/themepark-dev/theme.park:radarr
-              TP_THEME: overseerr
+              RADARR__AUTHENTICATION_METHOD: External
+              RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              RADARR__APPLICATION_URL: "https://radarr.${SECRET_DOMAIN}"
+              RADARR__INSTANCE_NAME: Radarr
+              RADARR__LOG_LEVEL: info
+              RADARR__PORT: &port 7878
 
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /ping
-                    port: &port 7878
-                  initialDelaySeconds: 10
-                  periodSeconds: 10
-                  timeoutSeconds: 3
-                  failureThreshold: 3
-              readiness: *probes
+              readiness:
+                enabled: true
               startup:
-                enabled: false
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
 
             resources:
               requests:
@@ -68,12 +64,12 @@ spec:
               limits:
                 memory: 2000Mi
 
-    defaultPodOptions:
-      securityContext:
-        runAsUser: *id
-        runAsGroup: *id
-        fsGroup: *id
-        fsGroupChangePolicy: "OnRootMismatch"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
 
     service:
       app:
