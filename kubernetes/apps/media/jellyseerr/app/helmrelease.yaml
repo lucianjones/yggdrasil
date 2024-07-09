@@ -68,7 +68,7 @@ spec:
 
     defaultPodOptions:
       securityContext:
-        runAsUser: &id ${MEDIA_ID}
+        runAsUser: *id
         runAsGroup: *id
         fsGroup: *id
         fsGroupChangePolicy: "OnRootMismatch"
