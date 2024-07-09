@@ -37,7 +37,7 @@ spec:
             strategy: RollingUpdate
             image:
               repository: fallenbagel/jellyseerr
-              tag: 1.7.0
+              tag: 1.9.2
             env:
               PUID: &id "1000"
               PGID: *id
