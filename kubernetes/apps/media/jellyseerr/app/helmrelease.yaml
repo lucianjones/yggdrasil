@@ -39,7 +39,7 @@ spec:
               repository: fallenbagel/jellyseerr
               tag: 1.9.2
             env:
-              PUID: &id "1000"
+              PUID: &id 1000
               PGID: *id
               TZ: ${TIMEZONE}
 

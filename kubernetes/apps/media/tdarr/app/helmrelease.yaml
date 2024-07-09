@@ -39,7 +39,7 @@ spec:
               repository: ghcr.io/haveagitgat/tdarr
               tag: 2.22.01
             env:
-              PUID: &id "1000"
+              PUID: &id 1000
               PGID: *id
               TZ: ${TIMEZONE}
               serverIP: 0.0.0.0

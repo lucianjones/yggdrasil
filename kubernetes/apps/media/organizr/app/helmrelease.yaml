@@ -39,7 +39,7 @@ spec:
               repository: organizr/organizr
               tag: latest
             env:
-              PUID: &id "1000"
+              PUID: &id 1000
               PGID: *id
               TZ: ${TIMEZONE}
 

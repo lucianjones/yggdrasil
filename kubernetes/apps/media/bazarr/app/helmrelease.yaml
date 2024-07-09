@@ -39,7 +39,7 @@ spec:
               repository: linuxserver/bazarr
               tag: v1.4.0-ls230
             env:
-              PUID: &id "1000"
+              PUID: &id 1000
               PGID: *id
               TZ: ${TIMEZONE}
               DOCKER_MODS: ghcr.io/themepark-dev/theme.park:bazarr
