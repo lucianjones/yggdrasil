@@ -37,7 +37,7 @@ spec:
             strategy: RollingUpdate
             image:
               repository: linuxserver/jellyfin
-              tag: 10.8.13
+              tag: 10.9.7
             env:
               PUID: &id "1000"
               PGID: *id
