@@ -30,8 +30,9 @@ spec:
       username: admin
     ingress:
       enabled: true
-      className: internal
+      className: external
       annotations:
+        external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         hajimari.io/icon: sawtooth-wave
         gethomepage.dev/enabled: "true"
         gethomepage.dev/description: A FluxCD UI
