@@ -32,9 +32,9 @@ spec:
   values:
     controllers:
       sonarr:
+        strategy: RollingUpdate
         containers:
           app:
-            strategy: RollingUpdate
             image:
               repository: linuxserver/sonarr
               tag: 4.0.6-develop
@@ -69,7 +69,7 @@ spec:
                 memory: 2000Mi
 
     defaultPodOptions:
-      podSecurityContext:
+      securityContext:
         runAsUser: *id
         runAsGroup: *id
         fsGroup: *id

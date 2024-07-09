@@ -32,9 +32,9 @@ spec:
   values:
     controllers:
       jellyfin:
+        strategy: RollingUpdate
         containers:
           app:
-            strategy: RollingUpdate
             image:
               repository: linuxserver/jellyfin
               tag: 10.9.7
@@ -74,7 +74,7 @@ spec:
     defaultPodOptions:
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
-      podSecurityContext:
+      securityContext:
         runAsUser: *id
         runAsGroup: *id
         fsGroup: *id

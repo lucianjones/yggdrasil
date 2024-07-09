@@ -32,9 +32,9 @@ spec:
   values:
     controllers:
       jellyseerr:
+        strategy: RollingUpdate
         containers:
           app:
-            strategy: RollingUpdate
             image:
               repository: fallenbagel/jellyseerr
               tag: 1.9.2
@@ -67,7 +67,7 @@ spec:
                 memory: 2000Mi
 
     defaultPodOptions:
-      podSecurityContext:
+      securityContext:
         runAsUser: &id ${MEDIA_ID}
         runAsGroup: *id
         fsGroup: *id

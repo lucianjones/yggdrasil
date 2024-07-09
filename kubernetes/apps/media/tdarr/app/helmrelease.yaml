@@ -32,9 +32,9 @@ spec:
   values:
     controllers:
       tdarr:
+        strategy: RollingUpdate
         containers:
           app:
-            strategy: RollingUpdate
             image:
               repository: ghcr.io/haveagitgat/tdarr
               tag: 2.22.01
@@ -78,7 +78,7 @@ spec:
     defaultPodOptions:
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
-      podSecurityContext:
+      securityContext:
         runAsUser: *id
         runAsGroup: *id
         fsGroup: *id
