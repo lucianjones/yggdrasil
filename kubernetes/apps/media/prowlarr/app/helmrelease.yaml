@@ -37,7 +37,7 @@ spec:
             strategy: RollingUpdate
             image:
               repository: linuxserver/prowlarr
-              tag: 1.11.4
+              tag: 1.20.1
             env:
               PUID: &id "1000"
               PGID: *id
