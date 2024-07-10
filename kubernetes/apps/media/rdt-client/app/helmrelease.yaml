@@ -39,8 +39,8 @@ spec:
               repository: rogerfar/rdtclient
               tag: 2.0.79
             env:
-              PUID: &id 1000
-              PGID: *id
+              PUID: 1000
+              PGID: 1000
               TZ: ${TIMEZONE}
 
             probes:
@@ -66,12 +66,11 @@ spec:
               limits:
                 memory: 3000Mi
 
-    defaultPodOptions:
-      securityContext:
-        runAsUser: *id
-        runAsGroup: *id
-        fsGroup: *id
-        fsGroupChangePolicy: "OnRootMismatch"
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
+              fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
