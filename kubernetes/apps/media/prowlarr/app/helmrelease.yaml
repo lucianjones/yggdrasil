@@ -36,30 +36,26 @@ spec:
         containers:
           app:
             image:
-              repository: linuxserver/prowlarr
+              repository: ghcr.io/onedr0p/prowlarr
               tag: 1.20.1
+
             env:
-              PUID: &id 1000
-              PGID: *id
-              TZ: ${TIMEZONE}
-              DOCKER_MODS: ghcr.io/themepark-dev/theme.park:prowlarr
-              TP_THEME: overseerr
+              PROWLARR__INSTANCE_NAME: Prowlarr
+              PROWLARR__PORT: &port 9696
+              PROWLARR__LOG_LEVEL: info
+              PROWLARR__ANALYTICS_ENABLED: "False"
+              PROWLARR__AUTHENTICATION_METHOD: External
 
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /ping
-                    port: &port 9696
-                  initialDelaySeconds: 10
-                  periodSeconds: 10
-                  timeoutSeconds: 3
-                  failureThreshold: 3
-              readiness: *probes
+              readiness:
+                enabled: true
               startup:
                 enabled: false
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
 
             resources:
               requests:
@@ -68,12 +64,11 @@ spec:
               limits:
                 memory: 2000Mi
 
-    defaultPodOptions:
-      securityContext:
-        runAsUser: *id
-        runAsGroup: *id
-        fsGroup: *id
-        fsGroupChangePolicy: "OnRootMismatch"
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
+              fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
