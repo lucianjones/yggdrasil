@@ -14,7 +14,6 @@ spec:
         name: bjw-s
         namespace: flux-system
       reconcileStrategy: Revision
-
   interval: 3m
   driftDetection:
     mode: enabled
@@ -36,30 +35,26 @@ spec:
         containers:
           app:
             image:
-              repository: linuxserver/sonarr
-              tag: 4.0.6-develop
+              repository: ghcr.io/onedr0p/sonarr
+              tag: 4.0.6
+
             env:
-              PUID: &id 1000
-              PGID: *id
-              TZ: ${TIMEZONE}
-              DOCKER_MODS: ghcr.io/themepark-dev/theme.park:sonarr
-              TP_THEME: overseerr
+              SONARR__APP__INSTANCENAME: Sonarr
+              SONARR__AUTH__METHOD: External
+              SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              SONARR__LOG__LEVEL: info
+              SONARR__SERVER__PORT: &port 8989
 
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /ping
-                    port: &port 8989
-                  initialDelaySeconds: 10
-                  periodSeconds: 10
-                  timeoutSeconds: 3
-                  failureThreshold: 3
-              readiness: *probes
+              readiness:
+                enabled: true
               startup:
-                enabled: false
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
 
             resources:
               requests:
@@ -68,12 +63,11 @@ spec:
               limits:
                 memory: 2000Mi
 
-    defaultPodOptions:
-      securityContext:
-        runAsUser: *id
-        runAsGroup: *id
-        fsGroup: *id
-        fsGroupChangePolicy: "OnRootMismatch"
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
+              fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
