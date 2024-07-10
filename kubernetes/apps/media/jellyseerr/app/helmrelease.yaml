@@ -38,10 +38,9 @@ spec:
             image:
               repository: fallenbagel/jellyseerr
               tag: 1.9.2
-
             env:
-              PORT: &port 5055
-              LOG_LEVEL: info
+              PUID: 1000
+              PGID: 1000
               TZ: ${TIMEZONE}
 
             probes:
@@ -50,8 +49,8 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /status
-                    port: *port
+                    path: /ping
+                    port: &port 5055
                   initialDelaySeconds: 10
                   periodSeconds: 10
                   timeoutSeconds: 3
