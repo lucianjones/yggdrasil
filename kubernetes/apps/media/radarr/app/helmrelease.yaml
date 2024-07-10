@@ -65,10 +65,10 @@ spec:
                 memory: 2000Mi
 
             securityContext:
-              runAsUser: &id 1000
-              runAsGroup: *id
-              fsGroup: *id
-              fsGroupChangePolicy: "OnRootMismatch"
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
+              fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
