@@ -11,4 +11,4 @@ resources:
   - ./radarr/ks.yaml
   - ./rdt-client/ks.yaml
   - ./prowlarr/ks.yaml
-  - ./tdarr/ks.yaml
+  # - ./tdarr/ks.yaml
