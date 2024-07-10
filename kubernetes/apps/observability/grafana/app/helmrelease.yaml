@@ -171,7 +171,7 @@ spec:
         gethomepage.dev/name: Grafana
         gethomepage.dev/pod-selector: ""
         gethomepage.dev/widget.type: "grafana"
-        gethomepage.dev/widget.url: "http://grafana.${SECRET_DOMAIN}"
+        gethomepage.dev/widget.url: "http://grafana.observability:80"
         gethomepage.dev/widget.username: "${GRAFANA_ADMIN_USER}"
         gethomepage.dev/widget.password: "${GRAFANA_ADMIN_PASSWORD}"
       hosts:
