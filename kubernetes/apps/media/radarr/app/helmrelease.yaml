@@ -65,7 +65,7 @@ spec:
                 memory: 2000Mi
 
             securityContext:
-              runAsUser: *id
+              runAsUser: &id 1000
               runAsGroup: *id
               fsGroup: *id
               fsGroupChangePolicy: "OnRootMismatch"
