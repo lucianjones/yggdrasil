@@ -147,3 +147,6 @@ spec:
             db:
               - path: /var/lib/postgresql/data
                 readOnly: false
+            init-db:
+              - path: /var/lib/postgresql/data
+                readOnly: false
