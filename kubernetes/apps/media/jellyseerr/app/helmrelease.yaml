@@ -38,9 +38,10 @@ spec:
             image:
               repository: fallenbagel/jellyseerr
               tag: 1.9.2
+
             env:
-              PUID: &id 1000
-              PGID: *id
+              PORT: &port 5055
+              LOG_LEVEL: info
               TZ: ${TIMEZONE}
 
             probes:
@@ -49,8 +50,8 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /ping
-                    port: &port 5055
+                    path: /status
+                    port: *port
                   initialDelaySeconds: 10
                   periodSeconds: 10
                   timeoutSeconds: 3
@@ -66,12 +67,11 @@ spec:
               limits:
                 memory: 2000Mi
 
-    defaultPodOptions:
-      securityContext:
-        runAsUser: *id
-        runAsGroup: *id
-        fsGroup: *id
-        fsGroupChangePolicy: "OnRootMismatch"
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
+              fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
