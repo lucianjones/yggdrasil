@@ -93,7 +93,7 @@ spec:
           gethomepage.dev/icon: rdt-client.png
           gethomepage.dev/name: RDT
           gethomepage.dev/widget.type: "qbittorrent"
-          gethomepage.dev/widget.url: "http://rdt-client.${SECRET_DOMAIN}"
+          gethomepage.dev/widget.url: "http://rdt-client:6500"
 
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
