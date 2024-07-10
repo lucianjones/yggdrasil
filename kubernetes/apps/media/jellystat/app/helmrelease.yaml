@@ -51,7 +51,7 @@ spec:
               tag: 15.2
             env:
               POSTGRES_DB: jfstat
-              POSTGRES_USER: postgres
+              # POSTGRES_USER: postgres
               POSTGRES_PASSWORD: postgres
 
             securityContext:
