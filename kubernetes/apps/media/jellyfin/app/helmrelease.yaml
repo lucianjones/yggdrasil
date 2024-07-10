@@ -39,28 +39,23 @@ spec:
               repository: linuxserver/jellyfin
               tag: 10.9.7
             env:
-              PUID: &id 1000
-              PGID: *id
+              PUID: 1000
+              PGID: 1000
               TZ: ${TIMEZONE}
               JELLYFIN_PublishedServerUrl: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
               # JELLYFIN_FFmpeg__probesize: 50000000
               # JELLYFIN_FFmpeg__analyzeduration: 50000000
 
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /health
-                    port: &port 8096
-                  initialDelaySeconds: 10
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
+              readiness:
+                enabled: true
               startup:
-                enabled: false
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
 
             resources:
               requests:
@@ -75,10 +70,10 @@ spec:
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
       securityContext:
-        runAsUser: *id
-        runAsGroup: *id
-        fsGroup: *id
-        fsGroupChangePolicy: "OnRootMismatch"
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:

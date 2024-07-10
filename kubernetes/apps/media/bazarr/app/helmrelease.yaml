@@ -36,30 +36,19 @@ spec:
         containers:
           app:
             image:
-              repository: linuxserver/bazarr
-              tag: v1.4.0-ls230
-            env:
-              PUID: &id 1000
-              PGID: *id
-              TZ: ${TIMEZONE}
-              DOCKER_MODS: ghcr.io/themepark-dev/theme.park:bazarr
-              TP_THEME: overseerr
+              repository: ghcr.io/onedr0p/bazarr
+              tag: 1.4.3
 
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /ping
-                    port: &port 6767
-                  initialDelaySeconds: 10
-                  periodSeconds: 10
-                  timeoutSeconds: 3
-                  failureThreshold: 3
-              readiness: *probes
+              readiness:
+                enabled: true
               startup:
-                enabled: false
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
 
             resources:
               requests:
@@ -68,12 +57,11 @@ spec:
               limits:
                 memory: 2000Mi
 
-    defaultPodOptions:
-      securityContext:
-        runAsUser: *id
-        runAsGroup: *id
-        fsGroup: *id
-        fsGroupChangePolicy: "OnRootMismatch"
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
+              fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
