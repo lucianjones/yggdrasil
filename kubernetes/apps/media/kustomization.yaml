@@ -9,6 +9,6 @@ resources:
   - ./organizr/ks.yaml
   - ./sonarr/ks.yaml
   - ./radarr/ks.yaml
-  - ./rdt-client/ks.yaml
+  # - ./rdt-client/ks.yaml
   - ./prowlarr/ks.yaml
   - ./tdarr/ks.yaml
