@@ -91,7 +91,7 @@ spec:
           gethomepage.dev/icon: radarr.png
           gethomepage.dev/name: Radarr
           gethomepage.dev/widget.type: "radarr"
-          gethomepage.dev/widget.url: "http://radarr:7878"
+          gethomepage.dev/widget.url: "http://radarr.media:7878"
           gethomepage.dev/widget.key: "${RADARR_API_KEY}"
 
         hosts:

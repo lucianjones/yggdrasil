@@ -90,7 +90,7 @@ spec:
           gethomepage.dev/icon: prowlarr.png
           gethomepage.dev/name: Prowlarr
           gethomepage.dev/widget.type: "prowlarr"
-          gethomepage.dev/widget.url: "http://prowlarr:9696"
+          gethomepage.dev/widget.url: "http://prowlarr.media:9696"
           gethomepage.dev/widget.key: "${PROWLARR_API_KEY}"
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"

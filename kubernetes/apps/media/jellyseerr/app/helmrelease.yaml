@@ -92,7 +92,7 @@ spec:
           gethomepage.dev/icon: jellyseerr.png
           gethomepage.dev/name: Jellyseerr
           gethomepage.dev/widget.type: "jellyseerr"
-          gethomepage.dev/widget.url: "http://jellyseerr:5055"
+          gethomepage.dev/widget.url: "http://jellyseerr.media:5055"
           gethomepage.dev/widget.key: "${JELLYSEERR_API_KEY}"
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
