@@ -36,26 +36,29 @@ spec:
         containers:
           app:
             image:
-              repository: linuxserver/jellyfin
+              repository: ghcr.io/jellyfin/jellyfin
               tag: 10.9.7
             env:
-              PUID: 1000
-              PGID: 1000
               TZ: ${TIMEZONE}
               JELLYFIN_PublishedServerUrl: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
               # JELLYFIN_FFmpeg__probesize: 50000000
               # JELLYFIN_FFmpeg__analyzeduration: 50000000
 
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
-              readiness:
-                enabled: true
-              startup:
-                enabled: true
+                custom: true
                 spec:
-                  failureThreshold: 30
-                  periodSeconds: 5
+                  httpGet:
+                    path: /health
+                    port: &port 8096
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
 
             resources:
               requests:
