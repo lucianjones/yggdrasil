@@ -37,7 +37,7 @@ spec:
           init-db:
             image:
               repository: postgres
-              tag: 15.7
+              tag: 16.3
             command:
               - sh
               - -c
@@ -48,7 +48,7 @@ spec:
           db:
             image:
               repository: postgres
-              tag: 15.7
+              tag: 16.3
             env:
               POSTGRES_DB: jfstat
               # POSTGRES_USER: postgres
