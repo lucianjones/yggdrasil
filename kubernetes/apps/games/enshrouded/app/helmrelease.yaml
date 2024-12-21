@@ -40,8 +40,6 @@ spec:
               tag: 1.4.1
             env:
               SERVER_NAME: Blueberry Ranch
-              PUID: 1000
-              GUID: 1000
               SERVER_SAVE_DIR: /usr/local/etc/enshrouded/savegame
               SERVER_LOG_DIR: /usr/local/etc/enshrouded/logs
               SERVER_SLOT_COUNT: 5
