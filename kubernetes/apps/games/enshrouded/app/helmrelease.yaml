@@ -1,0 +1,105 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: enshrouded
+  namespace: games
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      reconcileStrategy: Revision
+
+  interval: 3m
+  driftDetection:
+    mode: enabled
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
+  values:
+    controllers:
+      enshrouded:
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: mornedhels/enshrouded-server
+              tag: 1.4.1
+            env:
+              SERVER_NAME: Blueberry Ranch
+              SERVER_SLOT_COUNT: 5
+              SERVER_ROLE_0_NAME: admin
+              SERVER_ROLE_0_PASSWORD: based
+              SERVER_ROLE_0_CAN_KICK_BAN: true
+              SERVER_ROLE_0_CAN_ACCESS_INVENTORIES: true
+              SERVER_ROLE_0_CAN_EDIT_BASE: true
+              SERVER_ROLE_0_CAN_EXTEND_BASE: true
+              SERVER_ROLE_0_RESERVED_SLOTS: 1
+              SERVER_ROLE_1_NAME: user
+              SERVER_ROLE_1_PASSWORD: iloveblueberriesyumyum
+              SERVER_ROLE_1_CAN_ACCESS_INVENTORIES: true
+              SERVER_ROLE_1_CAN_EDIT_BASE: true
+              SERVER_ROLE_1_CAN_EXTEND_BASE: true
+              SERVER_ROLE_1_RESERVED_SLOTS: 4
+
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+
+            resources:
+              requests:
+                cpu: 2
+                memory: 4Gi
+              limits:
+                memory: 7Gi
+
+    service:
+      app:
+        annotations:
+          io.cilium/lb-ipam-ips: 10.10.10.111
+        type: LoadBalancer
+        ports:
+          http:
+            enabled: false
+          queryport:
+            enabled: true
+            port: 15637
+            protocol: UDP
+
+    ingress:
+      app:
+        enabled: false
+
+    persistence:
+      save:
+        enabled: true
+        type: hostPath
+        hostPath: /home/lucian/configs/enshrouded/save
+        globalMounts:
+          - path: /savegame
+            readOnly: false
+
+      logs:
+        enabled: true
+        type: hostPath
+        hostPath: /home/lucian/configs/enshrouded/logs
+        globalMounts:
+          - path: /logs
+            readOnly: false
