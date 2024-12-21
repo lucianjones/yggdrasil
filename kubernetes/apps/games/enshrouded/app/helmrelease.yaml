@@ -72,6 +72,7 @@ spec:
 
     service:
       app:
+        controller: enshrouded
         annotations:
           io.cilium/lb-ipam-ips: 10.10.10.111
         type: LoadBalancer
@@ -86,6 +87,13 @@ spec:
     ingress:
       app:
         enabled: false
+        hosts:
+          host: example.local
+          paths:
+            - path: /
+              service:
+                identifier: app
+                port: http
 
     persistence:
       save:
