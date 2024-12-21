@@ -79,6 +79,7 @@ spec:
         ports:
           http:
             enabled: false
+            port: 80
           queryport:
             enabled: true
             port: 15637
@@ -88,12 +89,12 @@ spec:
       app:
         enabled: false
         hosts:
-          host: example.local
-          paths:
-            - path: /
-              service:
-                identifier: app
-                port: http
+          - host: example.local
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
 
     persistence:
       save:
