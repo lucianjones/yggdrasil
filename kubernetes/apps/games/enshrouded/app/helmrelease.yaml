@@ -40,6 +40,10 @@ spec:
               tag: 1.4.1
             env:
               SERVER_NAME: Blueberry Ranch
+              PUID: 1000
+              GUID: 1000
+              SERVER_SAVE_DIR: /usr/local/etc/enshrouded/savegame
+              SERVER_LOG_DIR: /usr/local/etc/enshrouded/logs
               SERVER_SLOT_COUNT: 5
               SERVER_ROLE_0_NAME: admin
               SERVER_ROLE_0_PASSWORD: based
@@ -69,6 +73,12 @@ spec:
                 memory: 4Gi
               limits:
                 memory: 7Gi
+
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
+              fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
@@ -102,7 +112,7 @@ spec:
         type: hostPath
         hostPath: /home/lucian/configs/enshrouded/save
         globalMounts:
-          - path: /savegame
+          - path: /usr/local/etc/enshrouded/savegame
             readOnly: false
 
       logs:
@@ -110,5 +120,5 @@ spec:
         type: hostPath
         hostPath: /home/lucian/configs/enshrouded/logs
         globalMounts:
-          - path: /logs
+          - path: /usr/local/etc/enshrouded/logs
             readOnly: false
