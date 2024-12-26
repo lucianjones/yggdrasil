@@ -30,7 +30,7 @@ spec:
 
   values:
     controllers:
-      sonarr:
+      memos:
         strategy: RollingUpdate
         containers:
           app:
