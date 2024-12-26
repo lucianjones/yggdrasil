@@ -1,0 +1,86 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: memos
+  namespace: productivity
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      reconcileStrategy: Revision
+  interval: 3m
+  driftDetection:
+    mode: enabled
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
+  values:
+    controllers:
+      sonarr:
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: neosmemo/memos
+              tag: 0.23.0
+
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 2000Mi
+
+    service:
+      app:
+        controller: memos
+        ports:
+          http:
+            port: 5230
+
+    ingress:
+      app:
+        enabled: true
+        className: "external"
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      config:
+        enabled: true
+        type: hostPath
+        hostPath: /home/lucian/configs/memos
+        globalMounts:
+          - path: var/opt/memos
+            readOnly: false
