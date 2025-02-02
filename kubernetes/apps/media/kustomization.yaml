@@ -6,7 +6,6 @@ resources:
   - ./bazarr/ks.yaml
   - ./jellyfin/ks.yaml
   - ./jellyseerr/ks.yaml
-  - ./jellystat/ks.yaml
   - ./sonarr/ks.yaml
   - ./radarr/ks.yaml
   - ./rdt-client/ks.yaml
