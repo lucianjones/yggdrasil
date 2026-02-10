@@ -40,9 +40,9 @@ spec:
               tag: 1.2
 
             env:
-              - TZ=America/New_York
-              - CALLSIGN=N0CALL # Optional: Set your callsign
-              - LOCATOR=FN30au # Optional: Set your grid square
+              TZ: America/New_York
+              CALLSIGN: N0CALL # Optional: Set your callsign
+              LOCATOR: FN30au # Optional: Set your grid square
             probes:
               liveness:
                 enabled: true
