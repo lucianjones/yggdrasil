@@ -10,4 +10,4 @@ resources:
   - ./radarr/ks.yaml
   - ./rdt-client/ks.yaml
   - ./prowlarr/ks.yaml
-  - ./openhamclock/ks.yaml
+  # - ./openhamclock/ks.yaml
